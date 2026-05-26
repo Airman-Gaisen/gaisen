@@ -30,6 +30,30 @@
     .product-desc { font-size:13px; color:var(--ink-light); line-height:2; margin-top:2rem; padding-top:2rem; border-top:1px solid var(--border); }
     .product-separator { border:none; border-top:1px solid var(--border); margin:5rem 0 0; }
     .collection-title-bar { padding:3rem; border-bottom:1px solid var(--border); }
+    .shop-filter-panel { border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:1.25rem 3rem; display:grid; grid-template-columns:auto 1fr; gap:1.5rem 2rem; align-items:start; }
+    .filter-label { font-size:10px; letter-spacing:0.25em; text-transform:uppercase; color:var(--ink-faint); padding-top:0.7rem; }
+    .filter-group { display:flex; gap:0.75rem; flex-wrap:wrap; }
+    .filter-btn { border:1px solid var(--border); background:none; color:var(--ink-faint); cursor:pointer; font-family:'Montserrat',sans-serif; font-size:10px; letter-spacing:0.18em; text-transform:uppercase; padding:0.75rem 1rem; transition:all 0.2s; }
+    .filter-btn:hover, .filter-btn.active { background:var(--ink); border-color:var(--ink); color:var(--cream); }
+    .product-detail.is-hidden { display:none; }
+    .filter-empty { display:none; padding:5rem 3rem; border-bottom:1px solid var(--border); }
+    .filter-empty.is-visible { display:block; }
+    .filter-empty h2 { font-family:'Cormorant Garamond',serif; font-size:42px; font-weight:300; line-height:1.1; margin-bottom:1rem; }
+    .filter-empty p { color:var(--ink-light); line-height:2; max-width:540px; }
+    .concept-shot { background:#e8e4dc; display:flex; align-items:center; justify-content:center; padding:3rem; }
+    .concept-shot.dark { background:#111; color:var(--cream); }
+    .concept-card { width:min(76%,420px); aspect-ratio:3/4; border:1px solid rgba(14,14,14,0.18); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1.25rem; text-align:center; position:relative; background:rgba(245,242,236,0.36); }
+    .concept-shot.dark .concept-card { border-color:rgba(245,242,236,0.2); background:rgba(245,242,236,0.04); }
+    .concept-card.wide { aspect-ratio:4/3; width:min(84%,520px); }
+    .concept-mark { font-family:'Montserrat',sans-serif; font-size:11px; letter-spacing:0.32em; text-transform:uppercase; }
+    .concept-number { font-family:'Cormorant Garamond',serif; font-size:74px; font-weight:300; line-height:0.9; }
+    .concept-lines { display:flex; gap:0.5rem; }
+    .concept-lines span { display:block; width:44px; height:2px; background:currentColor; opacity:0.45; }
+    .concept-category { font-size:10px; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-faint); }
+    .concept-shot.dark .concept-category { color:rgba(245,242,236,0.55); }
+    .concept-card::before, .concept-card::after { content:""; position:absolute; border:1px solid currentColor; opacity:0.16; }
+    .concept-card::before { inset:1rem; }
+    .concept-card::after { inset:2rem; }
   </style>
 </head>
 <body>
@@ -52,14 +76,39 @@
     <p style="font-size:13px;color:var(--ink-light);margin-top:1rem;font-style:italic;">"Not a jersey. A statement."</p>
   </div>
 
+  <section class="shop-filter-panel" aria-label="Shop filters">
+    <p class="filter-label">Audience</p>
+    <div class="filter-group" data-filter-group="audience">
+      <button class="filter-btn active" data-filter="all" onclick="setProductFilter(this)">All</button>
+      <button class="filter-btn" data-filter="men" onclick="setProductFilter(this)">Men</button>
+      <button class="filter-btn" data-filter="women" onclick="setProductFilter(this)">Women</button>
+      <button class="filter-btn" data-filter="unisex" onclick="setProductFilter(this)">Unisex</button>
+    </div>
+    <p class="filter-label">Category</p>
+    <div class="filter-group" data-filter-group="category">
+      <button class="filter-btn active" data-filter="all" onclick="setProductFilter(this)">All</button>
+      <button class="filter-btn" data-filter="jersey" onclick="setProductFilter(this)">Jersey</button>
+      <button class="filter-btn" data-filter="shirts" onclick="setProductFilter(this)">Shirts</button>
+      <button class="filter-btn" data-filter="sunglasses" onclick="setProductFilter(this)">Glasses</button>
+      <button class="filter-btn" data-filter="shoes" onclick="setProductFilter(this)">Shoes</button>
+      <button class="filter-btn" data-filter="pants" onclick="setProductFilter(this)">Pants</button>
+      <button class="filter-btn" data-filter="backpacks" onclick="setProductFilter(this)">Backpacks</button>
+    </div>
+  </section>
+
+  <section class="filter-empty" id="filterEmpty">
+    <h2>No pieces match this selection.</h2>
+    <p>Try another audience or category. The Gaisen line is built around jerseys first, with pants, footwear, and eyewear supporting the uniform.</p>
+  </section>
+
   <!-- PRODUCT 1: WHITE JERSEY -->
-  <div class="product-detail">
+  <div class="product-detail" id="jersey-blanc" data-audience="men women unisex" data-category="jersey">
     <div class="product-images" style="grid-template-rows:1fr 1fr;grid-template-columns:1fr;">
       <div class="product-img-main" style="border-bottom:1px solid var(--border);">
-        <img src="jersey-white-front.png" alt="Gaisen White Jersey Front">
+        <img src="white-jersey-front.png" alt="Gaisen White Jersey Front">
       </div>
       <div class="product-img-main">
-        <img src="jersey-white-back.png" alt="Gaisen White Jersey Back">
+        <img src="white-jersey-back.png" alt="Gaisen White Jersey Back">
       </div>
     </div>
     <div class="product-info-panel">
@@ -81,13 +130,13 @@
   </div>
 
   <!-- PRODUCT 2: BLACK TEE -->
-  <div class="product-detail" style="border-top:1px solid var(--border);">
+  <div class="product-detail" id="tee-noir" data-audience="men women unisex" data-category="shirts" style="border-top:1px solid var(--border);">
     <div class="product-images" style="grid-template-rows:1fr 1fr;grid-template-columns:1fr;">
       <div class="product-img-main" style="border-bottom:1px solid var(--border);background:#111;">
-        <img src="tshirt-black-front.png" alt="Gaisen Black Tee Front">
+        <img src="tshirt-front.png" alt="Gaisen Black Tee Front">
       </div>
       <div class="product-img-main" style="background:#111;">
-        <img src="tshirt-black-back.png" alt="Gaisen Black Tee Back">
+        <img src="tshirt-back.png" alt="Gaisen Black Tee Back">
       </div>
     </div>
     <div class="product-info-panel">
@@ -108,29 +157,402 @@
     </div>
   </div>
 
-  <!-- PRODUCT 3: GLASSES -->
-  <div class="product-detail" style="border-top:1px solid var(--border);">
+  <!-- PRODUCT 3: SUNGLASSES -->
+  <div class="product-detail" id="eclipse-sunglasses" data-audience="men women unisex" data-category="sunglasses" style="border-top:1px solid var(--border);">
     <div class="product-images" style="grid-template-rows:1fr 1fr;grid-template-columns:1fr;">
-      <div class="product-img-main" style="border-bottom:1px solid var(--border);background:#0a0a0a;">
-        <img src="glasses-product.png" alt="Gaisen Sunglasses Product">
+      <div class="product-img-main" style="border-bottom:1px solid var(--border);background:#d4c7b6;">
+        <img src="gaisen-eclipse-generated.png" alt="Gaisen Eclipse Sunglasses Noir product">
       </div>
-      <div class="product-img-main" style="background:#0a0a0a;">
-        <img src="glasses-model.png" alt="Gaisen Sunglasses Model" style="object-position:center top;">
+      <div class="product-img-main" style="background:#d4c7b6;">
+        <img src="sunglasses-campaign.png" alt="Gaisen Eclipse Sunglasses Noir campaign">
       </div>
     </div>
     <div class="product-info-panel">
       <p class="product-collection">Gaisen Opening — SS 2026</p>
-      <h2 class="product-title">Sunglasses<br><em>Noir Doré</em></h2>
-      <p class="product-tagline">Acetate frame · Gold hardware · Gradient lens</p>
-      <p class="product-price-large">€ 245</p>
+      <h2 class="product-title">Eclipse Sunglasses<br><em>Noir</em></h2>
+      <p class="product-tagline">Black acetate · Dark lens · Gold GAISEN detail</p>
+      <p class="product-price-large">€ 240</p>
+      <p class="size-label">Select fit</p>
+      <div class="sizes">
+        <button class="size-btn active" onclick="selectSize(this)">OS</button>
+      </div>
+      <button class="add-to-cart" onclick="addedToCart(this)">Add to cart</button>
+      <p class="product-desc">Statement sunglasses in polished black acetate with dark lenses and restrained gold hardware. A sharp accessory piece for the first Gaisen wardrobe: minimal, architectural, and unmistakably house-coded.</p>
+    </div>
+  </div>
+
+  <!-- PRODUCT 4: SHIELD GLASSES -->
+  <div class="product-detail" id="axis-shield-noir" data-audience="men women unisex" data-category="sunglasses" style="border-top:1px solid var(--border);">
+    <div class="product-images" style="grid-template-rows:1fr 1fr;grid-template-columns:1fr;">
+      <div class="product-img-main" style="background:#111;">
+        <img src="gaisen-axis-shield.png" alt="Gaisen Axis Shield Noir product">
+      </div>
+      <div class="product-img-main concept-shot">
+        <div class="concept-card wide">
+          <p class="concept-mark">OPTIC HOUSE</p>
+          <p class="concept-number">01</p>
+          <div class="concept-lines"><span></span><span></span></div>
+          <p class="concept-category">Wrap lens</p>
+        </div>
+      </div>
+    </div>
+    <div class="product-info-panel">
+      <p class="product-collection">Gaisen Optic House — SS 2026</p>
+      <h2 class="product-title">Axis Shield<br><em>Noir</em></h2>
+      <p class="product-tagline">Wrap shield · Smoke lens · Athletic temple</p>
+      <p class="product-price-large">€ 280</p>
+      <p class="size-label">Select fit</p>
+      <div class="sizes">
+        <button class="size-btn active" onclick="selectSize(this)">OS</button>
+      </div>
+      <button class="add-to-cart" onclick="addedToCart(this)">Add to cart</button>
+      <p class="product-desc">A sport-forward shield frame reworked with Gaisen restraint. Low, aggressive lens line, black hardware, and a temple shape designed to sit naturally with jerseys and track pants.</p>
+    </div>
+  </div>
+
+  <!-- PRODUCT 5: OPTICAL FRAME -->
+  <div class="product-detail" id="studio-frame-clear" data-audience="men women unisex" data-category="sunglasses" style="border-top:1px solid var(--border);">
+    <div class="product-images" style="grid-template-rows:1fr 1fr;grid-template-columns:1fr;">
+      <div class="product-img-main" style="background:#e8e4dc;">
+        <img src="gaisen-studio-frame.png" alt="Gaisen Studio Frame Clear product">
+      </div>
+      <div class="product-img-main concept-shot dark">
+        <div class="concept-card wide">
+          <p class="concept-mark">BERLIN</p>
+          <p class="concept-number">00</p>
+          <div class="concept-lines"><span></span><span></span></div>
+          <p class="concept-category">Clear lens</p>
+        </div>
+      </div>
+    </div>
+    <div class="product-info-panel">
+      <p class="product-collection">Gaisen Optic House — SS 2026</p>
+      <h2 class="product-title">Studio Frame<br><em>Clear</em></h2>
+      <p class="product-tagline">Optical lens · Black acetate · Gold hinge mark</p>
+      <p class="product-price-large">€ 220</p>
+      <p class="size-label">Select fit</p>
+      <div class="sizes">
+        <button class="size-btn active" onclick="selectSize(this)">OS</button>
+      </div>
+      <button class="add-to-cart" onclick="addedToCart(this)">Add to cart</button>
+      <p class="product-desc">A clear-lens studio frame for indoor wear. Built as the quieter counterpart to the sunglasses: black acetate, rectangular lens, and a small gold GAISEN hinge detail.</p>
+    </div>
+  </div>
+
+  <!-- PRODUCT 6: RIMLESS GLASSES -->
+  <div class="product-detail" id="halo-rimless-smoke" data-audience="men women unisex" data-category="sunglasses" style="border-top:1px solid var(--border);">
+    <div class="product-images" style="grid-template-rows:1fr 1fr;grid-template-columns:1fr;">
+      <div class="product-img-main" style="background:#e8e4dc;">
+        <img src="gaisen-halo-rimless.png" alt="Gaisen Halo Rimless Smoke product">
+      </div>
+      <div class="product-img-main concept-shot dark">
+        <div class="concept-card wide">
+          <p class="concept-mark">SMOKE LENS</p>
+          <p class="concept-number">02</p>
+          <div class="concept-lines"><span></span><span></span></div>
+          <p class="concept-category">Rimless construction</p>
+        </div>
+      </div>
+    </div>
+    <div class="product-info-panel">
+      <p class="product-collection">Gaisen Optic House — SS 2026</p>
+      <h2 class="product-title">Halo Rimless<br><em>Smoke</em></h2>
+      <p class="product-tagline">Rimless lens · Gold bridge · Minimal temple</p>
+      <p class="product-price-large">€ 265</p>
+      <p class="size-label">Select fit</p>
+      <div class="sizes">
+        <button class="size-btn active" onclick="selectSize(this)">OS</button>
+      </div>
+      <button class="add-to-cart" onclick="addedToCart(this)">Add to cart</button>
+      <p class="product-desc">A lighter, more architectural eyewear piece. Rimless smoke lenses with a thin gold bridge and minimal black temple arms, designed to feel sharp rather than decorative.</p>
+    </div>
+  </div>
+
+  <!-- PRODUCT 7: VAULT BACKPACK -->
+  <div class="product-detail" id="vault-backpack-noir" data-audience="men women unisex" data-category="backpacks" style="border-top:1px solid var(--border);">
+    <div class="product-images" style="grid-template-rows:1fr 1fr;grid-template-columns:1fr;">
+      <div class="product-img-main" style="border-bottom:1px solid var(--border);background:#111;">
+        <img src="gaisen-vault-backpack-noir.png" alt="Gaisen Vault Backpack Noir product">
+      </div>
+      <div class="product-img-main concept-shot dark">
+        <div class="concept-card wide">
+          <p class="concept-mark">GAISEN</p>
+          <p class="concept-number">VB</p>
+          <div class="concept-lines"><span></span><span></span></div>
+          <p class="concept-category">Vault Backpack</p>
+        </div>
+      </div>
+    </div>
+    <div class="product-info-panel">
+      <p class="product-collection">Gaisen Carry System — SS 2026</p>
+      <h2 class="product-title">Vault Backpack<br><em>Noir</em></h2>
+      <p class="product-tagline">Structured leather · Matte hardware · Technical interior</p>
+      <p class="product-price-large">€ 620</p>
       <p class="size-label">Select size</p>
       <div class="sizes">
+        <button class="size-btn active" onclick="selectSize(this)">OS</button>
+      </div>
+      <button class="add-to-cart" onclick="addedToCart(this)">Add to cart</button>
+      <p class="product-desc">A premium black backpack built as an architectural carry piece. Structured leather body, matte hardware, padded shoulder system, and a quiet GAISEN mark for a serious everyday uniform.</p>
+    </div>
+  </div>
+
+  <!-- PRODUCT 8: AERO BACKPACK -->
+  <div class="product-detail" id="aero-backpack-cream" data-audience="men women unisex" data-category="backpacks" style="border-top:1px solid var(--border);">
+    <div class="product-images" style="grid-template-rows:1fr 1fr;grid-template-columns:1fr;">
+      <div class="product-img-main" style="border-bottom:1px solid var(--border);background:#e8e4dc;">
+        <img src="gaisen-aero-backpack-cream.png" alt="Gaisen Aero Backpack Cream product">
+      </div>
+      <div class="product-img-main concept-shot">
+        <div class="concept-card wide">
+          <p class="concept-mark">GAISEN</p>
+          <p class="concept-number">AB</p>
+          <div class="concept-lines"><span></span><span></span></div>
+          <p class="concept-category">Aero Backpack</p>
+        </div>
+      </div>
+    </div>
+    <div class="product-info-panel">
+      <p class="product-collection">Gaisen Carry System — SS 2026</p>
+      <h2 class="product-title">Aero Backpack<br><em>Creme</em></h2>
+      <p class="product-tagline">Technical nylon · Leather paneling · Travel silhouette</p>
+      <p class="product-price-large">€ 540</p>
+      <p class="size-label">Select size</p>
+      <div class="sizes">
+        <button class="size-btn active" onclick="selectSize(this)">OS</button>
+      </div>
+      <button class="add-to-cart" onclick="addedToCart(this)">Add to cart</button>
+      <p class="product-desc">A cream and black technical backpack designed for travel, studio days, and city movement. Sculpted straps, structured compartments, and Gaisen restraint throughout.</p>
+    </div>
+  </div>
+
+  <!-- PRODUCT 9: BASKETBALL JERSEY -->
+  <div class="product-detail" id="court-mesh-jersey" data-audience="men women unisex" data-category="jersey" style="border-top:1px solid var(--border);">
+    <div class="product-images" style="grid-template-rows:1fr 1fr;grid-template-columns:1fr;">
+      <div class="product-img-main" style="border-bottom:1px solid var(--border);background:#111;">
+        <img src="gaisen-court-mesh-jersey.png" alt="Gaisen Court Mesh Jersey Noir product">
+      </div>
+      <div class="product-img-main concept-shot dark">
+        <div class="concept-card">
+          <p class="concept-mark">OPENING</p>
+          <p class="concept-number">G</p>
+          <div class="concept-lines"><span></span><span></span></div>
+          <p class="concept-category">Basketball cut</p>
+        </div>
+      </div>
+    </div>
+    <div class="product-info-panel">
+      <p class="product-collection">Gaisen Athletic House — SS 2026</p>
+      <h2 class="product-title">Court Mesh Jersey<br><em>Noir</em></h2>
+      <p class="product-tagline">Basketball mesh · Boxy drop · House number 26</p>
+      <p class="product-price-large">€ 185</p>
+      <p class="size-label">Select size</p>
+      <div class="sizes">
+        <button class="size-btn" onclick="selectSize(this)">XS</button>
+        <button class="size-btn" onclick="selectSize(this)">S</button>
+        <button class="size-btn" onclick="selectSize(this)">M</button>
+        <button class="size-btn" onclick="selectSize(this)">L</button>
+        <button class="size-btn" onclick="selectSize(this)">XL</button>
+      </div>
+      <button class="add-to-cart" onclick="addedToCart(this)">Add to cart</button>
+      <p class="product-desc">A sleeveless basketball jersey cut with extra width through the body and a clean shoulder line. Designed as the second jersey pillar after the Blanc football silhouette.</p>
+    </div>
+  </div>
+
+  <!-- PRODUCT 10: RUGBY POLO JERSEY -->
+  <div class="product-detail" id="rugby-polo-jersey" data-audience="men women unisex" data-category="jersey" style="border-top:1px solid var(--border);">
+    <div class="product-images" style="grid-template-rows:1fr 1fr;grid-template-columns:1fr;">
+      <div class="product-img-main" style="border-bottom:1px solid var(--border);background:#e8e4dc;">
+        <img src="gaisen-rugby-polo-jersey.png" alt="Gaisen Rugby Polo Jersey Creme product">
+      </div>
+      <div class="product-img-main concept-shot">
+        <div class="concept-card">
+          <p class="concept-mark">BERLIN</p>
+          <p class="concept-number">XV</p>
+          <div class="concept-lines"><span></span><span></span></div>
+          <p class="concept-category">Heavy collar</p>
+        </div>
+      </div>
+    </div>
+    <div class="product-info-panel">
+      <p class="product-collection">Gaisen Athletic House — SS 2026</p>
+      <h2 class="product-title">Rugby Polo Jersey<br><em>Creme</em></h2>
+      <p class="product-tagline">Structured collar · Long sleeve · Heavy cotton mesh</p>
+      <p class="product-price-large">€ 210</p>
+      <p class="size-label">Select size</p>
+      <div class="sizes">
+        <button class="size-btn" onclick="selectSize(this)">XS</button>
+        <button class="size-btn" onclick="selectSize(this)">S</button>
+        <button class="size-btn" onclick="selectSize(this)">M</button>
+        <button class="size-btn" onclick="selectSize(this)">L</button>
+        <button class="size-btn" onclick="selectSize(this)">XL</button>
+      </div>
+      <button class="add-to-cart" onclick="addedToCart(this)">Add to cart</button>
+      <p class="product-desc">A rugby-polo hybrid for a more formal jersey language. Heavy collar, long sleeve, and restrained Gaisen markings for a piece that moves between street uniform and quiet tailoring.</p>
+    </div>
+  </div>
+
+  <!-- PRODUCT 11: CROPPED WOMEN'S JERSEY -->
+  <div class="product-detail" id="cropped-jersey-femme" data-audience="women" data-category="jersey" style="border-top:1px solid var(--border);">
+    <div class="product-images" style="grid-template-rows:1fr 1fr;grid-template-columns:1fr;">
+      <div class="product-img-main" style="border-bottom:1px solid var(--border);background:#e8e4dc;">
+        <img src="gaisen-cropped-jersey-femme.png" alt="Gaisen Cropped Jersey Femme product">
+      </div>
+      <div class="product-img-main concept-shot dark">
+        <div class="concept-card">
+          <p class="concept-mark">FEMME</p>
+          <p class="concept-number">26</p>
+          <div class="concept-lines"><span></span><span></span></div>
+          <p class="concept-category">Short body</p>
+        </div>
+      </div>
+    </div>
+    <div class="product-info-panel">
+      <p class="product-collection">Gaisen Athletic House — SS 2026</p>
+      <h2 class="product-title">Cropped Jersey<br><em>Femme</em></h2>
+      <p class="product-tagline">Short body · Wide shoulder · Mesh construction</p>
+      <p class="product-price-large">€ 160</p>
+      <p class="size-label">Select size</p>
+      <div class="sizes">
+        <button class="size-btn" onclick="selectSize(this)">XS</button>
         <button class="size-btn" onclick="selectSize(this)">S</button>
         <button class="size-btn" onclick="selectSize(this)">M</button>
         <button class="size-btn" onclick="selectSize(this)">L</button>
       </div>
       <button class="add-to-cart" onclick="addedToCart(this)">Add to cart</button>
-      <p class="product-desc">Oversized square acetate sunglasses in gloss black. Gold GAISEN lettering on the lens. Gold T-bar hardware on the temples. Gradient dark lenses. Comes in a branded GAISEN box.</p>
+      <p class="product-desc">A women’s cropped jersey with a wide athletic shoulder and abbreviated body. It keeps the sports code, but makes the proportion sharper and more editorial.</p>
+    </div>
+  </div>
+
+  <!-- PRODUCT 12: COURT WARM-UP TEE -->
+  <div class="product-detail" id="court-warmup-tee" data-audience="men women unisex" data-category="shirts" style="border-top:1px solid var(--border);">
+    <div class="product-images" style="grid-template-rows:1fr 1fr;grid-template-columns:1fr;">
+      <div class="product-img-main" style="border-bottom:1px solid var(--border);background:#111;">
+        <img src="gaisen-court-warmup-tee.png" alt="Gaisen Court Warm-Up Tee Noir product">
+      </div>
+      <div class="product-img-main concept-shot">
+        <div class="concept-card wide">
+          <p class="concept-mark">OPENING</p>
+          <p class="concept-number">SS</p>
+          <div class="concept-lines"><span></span><span></span></div>
+          <p class="concept-category">Heavyweight cotton</p>
+        </div>
+      </div>
+    </div>
+    <div class="product-info-panel">
+      <p class="product-collection">Gaisen Athletic House — SS 2026</p>
+      <h2 class="product-title">Court Warm-Up Tee<br><em>Noir</em></h2>
+      <p class="product-tagline">Heavyweight tee · Dropped shoulder · Court proportions</p>
+      <p class="product-price-large">€ 145</p>
+      <p class="size-label">Select size</p>
+      <div class="sizes">
+        <button class="size-btn" onclick="selectSize(this)">XS</button>
+        <button class="size-btn" onclick="selectSize(this)">S</button>
+        <button class="size-btn" onclick="selectSize(this)">M</button>
+        <button class="size-btn" onclick="selectSize(this)">L</button>
+        <button class="size-btn" onclick="selectSize(this)">XL</button>
+      </div>
+      <button class="add-to-cart" onclick="addedToCart(this)">Add to cart</button>
+      <p class="product-desc">A heavyweight warm-up tee inspired by pre-game basketball layers. Wider sleeve, dropped shoulder, dense cotton, and minimal Gaisen placement.</p>
+    </div>
+  </div>
+
+  <!-- PRODUCT 13: TRACK PANTS -->
+  <div class="product-detail" id="track-pant-noir" data-audience="men women unisex" data-category="pants" style="border-top:1px solid var(--border);">
+    <div class="product-images" style="grid-template-rows:1fr 1fr;grid-template-columns:1fr;">
+      <div class="product-img-main" style="border-bottom:1px solid var(--border);background:#111;">
+        <img src="gaisen-track-pant-noir.png" alt="Gaisen Track Pant Noir product">
+      </div>
+      <div class="product-img-main concept-shot">
+        <div class="concept-card">
+          <p class="concept-mark">BERLIN</p>
+          <p class="concept-number">02</p>
+          <div class="concept-lines"><span></span><span></span></div>
+          <p class="concept-category">Wide leg</p>
+        </div>
+      </div>
+    </div>
+    <div class="product-info-panel">
+      <p class="product-collection">Gaisen Athletic House — SS 2026</p>
+      <h2 class="product-title">Track Pant<br><em>Noir</em></h2>
+      <p class="product-tagline">Wide leg · Side stripe · Adjustable hem</p>
+      <p class="product-price-large">€ 220</p>
+      <p class="size-label">Select size</p>
+      <div class="sizes">
+        <button class="size-btn" onclick="selectSize(this)">XS</button>
+        <button class="size-btn" onclick="selectSize(this)">S</button>
+        <button class="size-btn" onclick="selectSize(this)">M</button>
+        <button class="size-btn" onclick="selectSize(this)">L</button>
+        <button class="size-btn" onclick="selectSize(this)">XL</button>
+      </div>
+      <button class="add-to-cart" onclick="addedToCart(this)">Add to cart</button>
+      <p class="product-desc">A formal track pant with a wider leg and clean side line. Built to sit under jerseys without looking like gymwear.</p>
+    </div>
+  </div>
+
+  <!-- PRODUCT 14: JOGGER PANTS -->
+  <div class="product-detail" id="jogger-pant-stone" data-audience="men women unisex" data-category="pants" style="border-top:1px solid var(--border);">
+    <div class="product-images" style="grid-template-rows:1fr 1fr;grid-template-columns:1fr;">
+      <div class="product-img-main" style="border-bottom:1px solid var(--border);background:#e8e4dc;">
+        <img src="gaisen-jogger-pant-stone.png" alt="Gaisen Jogger Pant Stone product">
+      </div>
+      <div class="product-img-main concept-shot dark">
+        <div class="concept-card">
+          <p class="concept-mark">ATHLETIC HOUSE</p>
+          <p class="concept-number">03</p>
+          <div class="concept-lines"><span></span><span></span></div>
+          <p class="concept-category">Tapered hem</p>
+        </div>
+      </div>
+    </div>
+    <div class="product-info-panel">
+      <p class="product-collection">Gaisen Athletic House — SS 2026</p>
+      <h2 class="product-title">Jogger Pant<br><em>Stone</em></h2>
+      <p class="product-tagline">Heavy fleece · Tapered leg · Minimal mark</p>
+      <p class="product-price-large">€ 195</p>
+      <p class="size-label">Select size</p>
+      <div class="sizes">
+        <button class="size-btn" onclick="selectSize(this)">XS</button>
+        <button class="size-btn" onclick="selectSize(this)">S</button>
+        <button class="size-btn" onclick="selectSize(this)">M</button>
+        <button class="size-btn" onclick="selectSize(this)">L</button>
+        <button class="size-btn" onclick="selectSize(this)">XL</button>
+      </div>
+      <button class="add-to-cart" onclick="addedToCart(this)">Add to cart</button>
+      <p class="product-desc">A premium jogger with dense fleece, a clean taper, and a quiet Gaisen mark. Designed as the softer counterpart to the track pant.</p>
+    </div>
+  </div>
+
+  <!-- PRODUCT 15: SNEAKERS -->
+  <div class="product-detail" id="sector-sneaker-noir" data-audience="men women unisex" data-category="shoes" style="border-top:1px solid var(--border);">
+    <div class="product-images" style="grid-template-rows:1fr 1fr;grid-template-columns:1fr;">
+      <div class="product-img-main" style="border-bottom:1px solid var(--border);background:#111;">
+        <img src="gaisen-sector-sneaker-noir.png" alt="Gaisen Sector Sneaker Noir product">
+      </div>
+      <div class="product-img-main concept-shot">
+        <div class="concept-card wide">
+          <p class="concept-mark">NOIR / CREME</p>
+          <p class="concept-number">01</p>
+          <div class="concept-lines"><span></span><span></span></div>
+          <p class="concept-category">High quality sneaker</p>
+        </div>
+      </div>
+    </div>
+    <div class="product-info-panel">
+      <p class="product-collection">Gaisen Athletic House — SS 2026</p>
+      <h2 class="product-title">Sector Sneaker<br><em>Noir</em></h2>
+      <p class="product-tagline">Leather upper · Sculpted sole · Court reference</p>
+      <p class="product-price-large">€ 320</p>
+      <p class="size-label">Select size</p>
+      <div class="sizes">
+        <button class="size-btn" onclick="selectSize(this)">40</button>
+        <button class="size-btn" onclick="selectSize(this)">41</button>
+        <button class="size-btn" onclick="selectSize(this)">42</button>
+        <button class="size-btn" onclick="selectSize(this)">43</button>
+        <button class="size-btn" onclick="selectSize(this)">44</button>
+      </div>
+      <button class="add-to-cart" onclick="addedToCart(this)">Add to cart</button>
+      <p class="product-desc">A high-quality leather sneaker for the Gaisen uniform. Minimal upper, architectural sole, and a court-sport stance that pairs naturally with the jersey line.</p>
     </div>
   </div>
 
@@ -167,6 +589,25 @@
       btn.textContent = 'Added ✓';
       btn.style.opacity = '0.6';
       setTimeout(() => { btn.textContent = 'Add to cart'; btn.style.opacity = '1'; }, 2000);
+    }
+    function setProductFilter(btn) {
+      const group = btn.closest('.filter-group');
+      group.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const audience = document.querySelector('[data-filter-group="audience"] .active').dataset.filter;
+      const category = document.querySelector('[data-filter-group="category"] .active').dataset.filter;
+      let visibleCount = 0;
+
+      document.querySelectorAll('.product-detail').forEach(product => {
+        const matchesAudience = audience === 'all' || product.dataset.audience.split(' ').includes(audience);
+        const matchesCategory = category === 'all' || product.dataset.category === category;
+        const shouldShow = matchesAudience && matchesCategory;
+        product.classList.toggle('is-hidden', !shouldShow);
+        if (shouldShow) visibleCount += 1;
+      });
+
+      document.getElementById('filterEmpty').classList.toggle('is-visible', visibleCount === 0);
     }
   </script>
 </body>
