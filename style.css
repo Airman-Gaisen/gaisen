@@ -188,6 +188,266 @@ body.modal-lock .support-bot {
   visibility: hidden;
 }
 
+body.account-lock .support-bot {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(0.75rem);
+  visibility: hidden;
+}
+
+.account-nav-link {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.account-promo-bubble {
+  position: fixed;
+  left: clamp(1rem, 4vw, 3rem);
+  top: 100vh;
+  z-index: 175;
+  width: clamp(84px, 9vw, 116px);
+  height: clamp(84px, 9vw, 116px);
+  border: 1px solid rgba(245,242,236,0.42);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 34% 24%, rgba(255,255,255,0.42), transparent 22%),
+    linear-gradient(135deg, #0e0e0e, #33252b 58%, #ff3d9a);
+  color: var(--cream);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 22px 58px rgba(14,14,14,0.26);
+  animation: promoBubbleRise 26s linear infinite;
+}
+
+.account-promo-bubble:hover {
+  animation-play-state: paused;
+}
+
+.account-promo-bubble::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border: 1px solid rgba(201,255,53,0.36);
+  border-radius: inherit;
+}
+
+.account-promo-bubble span {
+  display: block;
+  text-align: center;
+}
+
+.account-promo-bubble strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3.2vw, 42px);
+  font-weight: 300;
+  line-height: 0.88;
+}
+
+.account-promo-bubble small {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.account-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 260;
+  display: none;
+}
+
+.account-panel.is-open {
+  display: block;
+}
+
+.account-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(14,14,14,0.5);
+}
+
+.account-sheet {
+  position: absolute;
+  right: clamp(1rem, 4vw, 4rem);
+  top: 50%;
+  width: min(520px, calc(100vw - 2rem));
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+  transform: translateY(-50%);
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(90deg, rgba(14,14,14,0.035) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(14,14,14,0.03) 1px, transparent 1px),
+    var(--cream);
+  background-size: 36px 36px;
+  box-shadow: 0 34px 110px rgba(14,14,14,0.34);
+}
+
+.account-head {
+  position: relative;
+  min-height: 180px;
+  padding: 1.25rem;
+  background:
+    radial-gradient(circle at 72% 20%, rgba(255,61,154,0.34), transparent 24%),
+    radial-gradient(circle at 95% 88%, rgba(201,255,53,0.22), transparent 22%),
+    var(--ink);
+  color: var(--cream);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+
+.account-head::after {
+  content: "10";
+  position: absolute;
+  right: -0.25rem;
+  bottom: -0.34rem;
+  font-family: var(--font-display);
+  font-size: clamp(110px, 18vw, 178px);
+  line-height: 0.75;
+  color: rgba(245,242,236,0.08);
+  pointer-events: none;
+}
+
+.account-label {
+  position: relative;
+  z-index: 1;
+  color: rgba(245,242,236,0.62);
+  font-size: 9px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.account-title {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-display);
+  font-size: clamp(46px, 8vw, 78px);
+  font-weight: 300;
+  line-height: 0.9;
+}
+
+.account-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(245,242,236,0.28);
+  background: transparent;
+  color: var(--cream);
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.account-body {
+  padding: 1.5rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.account-copy {
+  color: var(--ink-light);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.account-code {
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--cream);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.account-code strong {
+  font-size: 14px;
+  letter-spacing: 0.22em;
+}
+
+.account-form {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.account-form label {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.account-form input {
+  width: 100%;
+  border: 1px solid var(--border);
+  background: rgba(245,242,236,0.76);
+  padding: 0.9rem;
+  font-family: var(--font-body);
+  color: var(--ink);
+  outline: none;
+}
+
+.account-submit {
+  min-height: 52px;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--cream);
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.account-note {
+  min-height: 1.4rem;
+  color: var(--ink-light);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+@keyframes promoBubbleRise {
+  0% { transform: translate3d(0, 16vh, 0) scale(0.82); opacity: 0; }
+  8% { opacity: 1; }
+  50% { transform: translate3d(12vw, -55vh, 0) scale(1); opacity: 1; }
+  86% { opacity: 1; }
+  100% { transform: translate3d(4vw, -122vh, 0) scale(0.9); opacity: 0; }
+}
+
+@media (max-width: 620px) {
+  .account-promo-bubble {
+    left: 0.9rem;
+    width: 78px;
+    height: 78px;
+  }
+
+  .account-sheet {
+    right: 1rem;
+    left: 1rem;
+    width: auto;
+  }
+}
+
 .support-toggle {
   min-width: 132px;
   height: 46px;
