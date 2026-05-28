@@ -10,6 +10,7 @@
   --border: rgba(14,14,14,0.12);
   --font-display: 'Cormorant Garamond', Georgia, serif;
   --font-body: 'Montserrat', sans-serif;
+  --nav-height: 92px;
 }
 
 html { scroll-behavior: smooth; }
@@ -133,6 +134,8 @@ img { display: block; width: 100%; }
   padding: 1.8rem 3rem;
   z-index: 100;
   mix-blend-mode: multiply;
+  min-height: var(--nav-height);
+  box-sizing: border-box;
 }
 .nav-logo {
   font-family: var(--font-body);
@@ -169,6 +172,46 @@ img { display: block; width: 100%; }
   color: var(--cream);
   mix-blend-mode: normal;
   background: linear-gradient(180deg, rgba(14,14,14,0.48), rgba(14,14,14,0));
+  border-bottom: 0;
+}
+
+body:not(.home-page) .nav {
+  background: rgba(245,242,236,0.96);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(16px);
+  mix-blend-mode: normal;
+}
+
+@media (max-width: 760px) {
+  :root { --nav-height: 118px; }
+
+  .nav {
+    flex-wrap: wrap;
+    gap: 0.8rem 1rem;
+    padding: 1rem 1.25rem;
+  }
+
+  .nav-logo {
+    order: -1;
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+  }
+
+  .nav-left,
+  .nav-right {
+    flex: 1 1 0;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .nav-left a,
+  .nav-right a,
+  .account-nav-link,
+  .cart-link {
+    font-size: 10px;
+  }
 }
 
 /* Support Bot */
