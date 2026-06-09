@@ -795,152 +795,13 @@
       transition: transform 0.45s ease;
     }
     .checkout-submit:hover::after { transform: translateX(100%); }
-    .filter-btn,
-    .cart-open,
-    .quick-add,
-    .view-details,
-    .checkout-submit,
-    .remove-item,
-    .pay-option span {
-      --button-glow: var(--accent, #ff3d9a);
-      --button-spark: #c9ff35;
-      position: relative;
-      isolation: isolate;
-      overflow: hidden;
-      transform: translateZ(0);
-      transition:
-        transform 0.24s ease,
-        box-shadow 0.24s ease,
-        border-color 0.24s ease,
-        background 0.24s ease,
-        color 0.24s ease,
-        opacity 0.2s ease;
-    }
-    .close-btn {
-      --button-glow: #ff3d9a;
-      --button-spark: #c9ff35;
-      isolation: isolate;
-      overflow: hidden;
-      transform: translateZ(0);
-      transition:
-        transform 0.24s ease,
-        box-shadow 0.24s ease,
-        border-color 0.24s ease,
-        background 0.24s ease,
-        color 0.24s ease;
-    }
-    .filter-btn::before,
-    .cart-open::before,
-    .quick-add::before,
-    .view-details::before,
-    .checkout-submit::before,
-    .close-btn::before,
-    .remove-item::before,
-    .pay-option span::before {
-      content: "";
-      position: absolute;
-      inset: -2px;
-      z-index: 0;
-      pointer-events: none;
-      background:
-        linear-gradient(105deg, transparent 0 34%, rgba(255,255,255,0.34) 46%, transparent 58%),
-        linear-gradient(90deg, color-mix(in srgb, var(--button-glow) 26%, transparent), transparent 48%, color-mix(in srgb, var(--button-spark) 20%, transparent));
-      opacity: 0;
-      transform: translateX(-110%) skewX(-14deg);
-      transition: opacity 0.24s ease, transform 0.58s ease;
-    }
-    .filter-btn:hover,
-    .cart-open:hover,
-    .quick-add:hover,
-    .view-details:hover,
-    .checkout-submit:hover,
-    .pay-option span:hover {
-      opacity: 1;
-      transform: translateY(-2px);
-      box-shadow: 0 14px 34px rgba(14,14,14,0.13);
-    }
-    .filter-btn:hover::before,
-    .cart-open:hover::before,
-    .quick-add:hover::before,
-    .view-details:hover::before,
-    .checkout-submit:hover::before,
-    .close-btn:hover::before,
-    .remove-item:hover::before,
-    .pay-option span:hover::before {
-      opacity: 1;
-      transform: translateX(110%) skewX(-14deg);
-    }
-    .filter-btn.active {
-      transform: translateY(-1px);
-      box-shadow: 0 10px 26px rgba(14,14,14,0.1);
-    }
-    .close-btn:hover,
-    .remove-item:hover {
-      background: var(--ink);
-      border-color: var(--ink);
-      color: var(--cream);
-      transform: rotate(90deg) scale(1.04);
-      box-shadow: 0 12px 30px rgba(14,14,14,0.12);
-    }
-    .cart-head .close-btn:hover {
-      background: var(--cream);
-      color: var(--ink);
-      border-color: var(--cream);
-    }
-    .filter-btn:active,
-    .cart-open:active,
-    .quick-add:active,
-    .view-details:active,
-    .checkout-submit:active,
-    .pay-option span:active {
-      transform: translateY(0) scale(0.97);
-      transition-duration: 0.12s;
-    }
-    .close-btn:active,
-    .remove-item:active {
-      transform: rotate(90deg) scale(0.96);
-      transition-duration: 0.12s;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .filter-btn,
-      .cart-open,
-      .quick-add,
-      .view-details,
-      .checkout-submit,
-      .close-btn,
-      .remove-item,
-      .pay-option span,
-      .filter-btn::before,
-      .cart-open::before,
-      .quick-add::before,
-      .view-details::before,
-      .checkout-submit::before,
-      .close-btn::before,
-      .remove-item::before,
-      .pay-option span::before {
-        transition: none;
-      }
-
-      .filter-btn:hover,
-      .cart-open:hover,
-      .quick-add:hover,
-      .view-details:hover,
-      .checkout-submit:hover,
-      .close-btn:hover,
-      .remove-item:hover,
-      .pay-option span:hover {
-        transform: none;
-      }
-    }
     body.modal-lock { overflow: hidden; }
     @media (max-width: 1100px) {
+      .shop-menu { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .shop-filter-panel { grid-template-columns: auto 1fr auto; }
       .shop-filter-panel .cart-open { grid-column: 3; grid-row: 1 / span 2; }
     }
     @media (max-width: 800px) {
-      .shop-menu {
-        gap: 1rem;
-      }
       .shop-menu { padding: 1rem; }
       .buy-card,
       .buy-card:nth-of-type(even) {
@@ -957,7 +818,7 @@
         grid-column: 1;
         grid-row: 1;
         min-height: 360px;
-        clip-path: polygon(0 0, 100% 0, 100% 90%, 92% 100%, 0 100%);
+        clip-path: none;
         border-right: 0;
         border-left: 0;
         border-bottom: 1px solid var(--border);
