@@ -24,6 +24,7 @@ body {
   letter-spacing: 0.03em;
   line-height: 1.7;
   cursor: default;
+  overflow-x: hidden;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -238,6 +239,10 @@ body.account-lock .support-bot {
   visibility: hidden;
 }
 
+body:not(.home-page):not(.shop-page) .account-promo-bubble {
+  display: none;
+}
+
 .account-nav-link {
   border: 0;
   background: transparent;
@@ -252,8 +257,8 @@ body.account-lock .support-bot {
 
 .account-promo-bubble {
   position: fixed;
-  left: clamp(1rem, 4vw, 3rem);
-  top: 100vh;
+  right: clamp(1rem, 3vw, 2.4rem);
+  bottom: -130px;
   z-index: 175;
   width: clamp(84px, 9vw, 116px);
   height: clamp(84px, 9vw, 116px);
@@ -267,7 +272,11 @@ body.account-lock .support-bot {
   display: grid;
   place-items: center;
   box-shadow: 0 22px 58px rgba(14,14,14,0.26);
-  animation: promoBubbleRise 26s linear infinite;
+  animation: promoBubbleRise 26s linear 1 both;
+}
+
+.account-promo-bubble.is-finished {
+  display: none;
 }
 
 .account-promo-bubble:hover {
@@ -470,16 +479,16 @@ body.account-lock .support-bot {
 }
 
 @keyframes promoBubbleRise {
-  0% { transform: translate3d(0, 16vh, 0) scale(0.82); opacity: 0; }
+  0% { transform: translate3d(0, 0, 0) scale(0.82); opacity: 0; }
   8% { opacity: 1; }
-  50% { transform: translate3d(12vw, -55vh, 0) scale(1); opacity: 1; }
+  50% { transform: translate3d(-2vw, -58vh, 0) scale(1); opacity: 1; }
   86% { opacity: 1; }
-  100% { transform: translate3d(4vw, -122vh, 0) scale(0.9); opacity: 0; }
+  100% { transform: translate3d(1vw, -118vh, 0) scale(0.9); opacity: 0; }
 }
 
 @media (max-width: 620px) {
   .account-promo-bubble {
-    left: 0.9rem;
+    right: 0.9rem;
     width: 78px;
     height: 78px;
   }
@@ -910,6 +919,15 @@ body.account-lock .support-bot {
     rgba(14,14,14,0.03) 60px,
     rgba(14,14,14,0.03) 61px
   );
+  position: relative;
+  overflow: hidden;
+}
+.editorial-img img {
+  width: 100%;
+  height: 100%;
+  min-height: 600px;
+  object-fit: cover;
+  object-position: center;
 }
 
 /* Bottom motion */
@@ -1263,12 +1281,14 @@ body.account-lock .support-bot {
 /* ── About Page ── */
 .about-intro {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
   gap: 0;
+  min-width: 0;
 }
 .about-text {
   padding: 5rem 3rem;
   border-right: 1px solid var(--border);
+  min-width: 0;
 }
 .about-text p {
   font-size: 15px;
@@ -1278,15 +1298,45 @@ body.account-lock .support-bot {
 }
 .about-text p + p { margin-top: 1.5rem; }
 .about-img-block {
+  position: relative;
+  margin: 0;
   background: #C9C4B9;
   min-height: 500px;
-  background-image: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 50px,
-    rgba(14,14,14,0.04) 50px,
-    rgba(14,14,14,0.04) 51px
-  );
+  overflow: hidden;
+}
+.about-img-block img {
+  width: 100%;
+  height: 100%;
+  min-height: 640px;
+  object-fit: cover;
+  object-position: 66% center;
+  filter: saturate(0.88) contrast(0.96);
+}
+.about-img-block::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(14,14,14,0.28), rgba(14,14,14,0) 32%),
+    linear-gradient(0deg, rgba(14,14,14,0.18), rgba(14,14,14,0) 42%);
+  pointer-events: none;
+}
+.about-img-block figcaption {
+  position: absolute;
+  left: 1.4rem;
+  bottom: 1.2rem;
+  z-index: 1;
+  color: var(--cream);
+  font-size: 9px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+}
+.about-editorial-img {
+  background: #d8d0c5;
+}
+.about-editorial-img img {
+  object-fit: cover;
+  object-position: center;
 }
 .about-values {
   display: grid;
@@ -1704,6 +1754,42 @@ body.account-lock .support-bot {
   font-size: 10px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .about-intro,
+  .editorial {
+    grid-template-columns: 1fr;
+  }
+
+  .about-text,
+  .editorial-text {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .about-img-block img {
+    min-height: 460px;
+    object-position: 58% center;
+  }
+
+  .about-values {
+    grid-template-columns: 1fr;
+  }
+
+  .value-item {
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+@media (max-width: 620px) {
+  .about-text,
+  .editorial-text,
+  .value-item {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
 }
 
 @keyframes filmCycle {
