@@ -61,103 +61,21 @@
       white-space: nowrap;
     }
     .shop-menu {
-      display: flex;
-      flex-direction: column;
-      gap: clamp(1rem, 2vw, 1.5rem);
-      padding: clamp(1rem, 3vw, 3rem);
-      background:
-        linear-gradient(90deg, rgba(14,14,14,0.045) 1px, transparent 1px),
-        linear-gradient(0deg, rgba(14,14,14,0.035) 1px, transparent 1px),
-        var(--cream);
-      background-size: 72px 72px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-left: 1px solid var(--border);
     }
     .buy-card {
-      --accent: #ff4fa3;
-      min-height: 430px;
-      border: 1px solid var(--border);
-      background: rgba(245,242,236,0.94);
-      display: grid;
-      grid-template-columns: minmax(270px, 38%) minmax(0, 1fr);
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 24px 60px rgba(14,14,14,0.07);
-      transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
-    }
-    .buy-card[data-category="sunglasses"] { --accent: #27d9ff; }
-    .buy-card[data-category="pants"] { --accent: #ff6a1f; }
-    .buy-card[data-category="shirts"] { --accent: #c9ff35; }
-    .buy-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(14,14,14,0.36);
-      box-shadow: 0 30px 78px rgba(14,14,14,0.14);
-    }
-    .buy-card::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 8px;
-      background: var(--accent);
-      z-index: 2;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--cream);
     }
     .buy-card.is-hidden { display: none; }
-    .buy-card:nth-of-type(even) {
-      grid-template-columns: minmax(0, 1fr) minmax(270px, 38%);
-    }
-    .buy-card:nth-of-type(even) .buy-image {
-      grid-column: 2;
-      grid-row: 1;
-      border-left: 1px solid var(--border);
-      border-right: 0;
-      clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%);
-    }
-    .buy-card:nth-of-type(even) .buy-info {
-      grid-column: 1;
-      grid-row: 1;
-    }
-    .buy-card::before {
-      content: attr(data-index);
-      position: absolute;
-      right: 1.4rem;
-      top: 0.2rem;
-      font-family: var(--font-display);
-      font-size: clamp(74px, 12vw, 188px);
-      line-height: 0.82;
-      color: rgba(14,14,14,0.045);
-      z-index: 0;
-      pointer-events: none;
-    }
     .buy-image {
       position: relative;
-      height: 100%;
-      min-height: 430px;
+      aspect-ratio: 3 / 4;
       overflow: hidden;
-      background:
-        linear-gradient(135deg, rgba(14,14,14,0.08), rgba(255,255,255,0.18)),
-        #ddd8cf;
-      border-right: 1px solid var(--border);
-      clip-path: polygon(0 0, 92% 0, 100% 100%, 0 100%);
-    }
-    .buy-image::before {
-      content: "";
-      position: absolute;
-      inset: 1rem;
-      border: 1px solid rgba(14,14,14,0.12);
-      z-index: 1;
-      pointer-events: none;
-    }
-    .buy-image::after {
-      content: "GAISEN";
-      position: absolute;
-      left: 1.2rem;
-      bottom: 1.15rem;
-      z-index: 2;
-      color: rgba(14,14,14,0.42);
-      font-size: 9px;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      writing-mode: vertical-rl;
+      background: #ddd8cf;
     }
     .buy-image img {
       position: absolute;
@@ -166,96 +84,45 @@
       height: 100%;
       object-fit: cover;
       object-position: center;
-      padding: 0;
       transition: opacity 0.32s ease, transform 0.5s ease;
     }
-    .buy-card[data-category="pants"] .buy-image img { object-position: center 56%; }
-    .buy-card[data-category="jersey"] .buy-image img { object-position: center 42%; }
-    .buy-card[data-category="shirts"] .buy-image img { object-position: center 45%; }
-    .buy-card[data-category="sunglasses"] .buy-image img { object-position: center; }
     .buy-image img:nth-child(2) {
       opacity: 0;
       transform: scale(1.04);
     }
-    .buy-card.has-alt:hover .buy-image img:first-child { opacity: 0; }
-    .buy-card.has-alt:hover .buy-image img:nth-child(2) { opacity: 1; transform: scale(1); }
-    .buy-card:hover .buy-image img:first-child { transform: scale(1.08) rotate(-0.6deg); }
-    .buy-info {
-      padding: clamp(1.25rem, 3vw, 3rem);
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-      gap: 1.25rem;
-      position: relative;
-      z-index: 1;
-    }
+    .buy-card:hover .buy-image img:first-child { opacity: 0; }
+    .buy-card:hover .buy-image img:nth-child(2) { opacity: 1; transform: scale(1); }
+    .buy-info { padding: 1rem; }
     .buy-line {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
+      display: flex;
+      justify-content: space-between;
       gap: 1rem;
-      align-items: start;
+      align-items: baseline;
+      margin-bottom: 0.55rem;
     }
-    .buy-name {
-      font-family: var(--font-display);
-      font-size: clamp(38px, 5vw, 82px);
-      font-weight: 300;
-      letter-spacing: 0;
-      line-height: 0.92;
-      max-width: 820px;
-    }
-    .buy-price {
-      border: 1px solid var(--border);
-      padding: 0.7rem 0.85rem;
-      font-size: 12px;
-      color: var(--ink);
-      white-space: nowrap;
-      background: rgba(255,255,255,0.28);
-    }
+    .buy-name { font-size: 12px; letter-spacing: 0.04em; line-height: 1.45; }
+    .buy-price { font-size: 12px; color: var(--ink-light); white-space: nowrap; }
     .buy-meta {
       font-size: 9px;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--ink-faint);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      align-items: center;
-    }
-    .buy-meta span {
-      border-bottom: 1px solid rgba(14,14,14,0.22);
-      padding-bottom: 0.25rem;
-    }
-    .buy-meta span:first-child {
-      color: var(--ink);
-      border-bottom-color: var(--accent);
-    }
-    .buy-desc {
-      align-self: end;
-      max-width: 560px;
-      color: var(--ink-light);
-      font-size: 13px;
-      line-height: 1.9;
+      margin-bottom: 0.85rem;
     }
     .quick-actions {
       display: grid;
-      grid-template-columns: minmax(120px, 180px) auto auto;
-      gap: 0;
-      align-items: stretch;
-      border: 1px solid var(--border);
-      width: fit-content;
-      max-width: 100%;
-      background: rgba(245,242,236,0.78);
-      box-shadow: -8px 8px 0 color-mix(in srgb, var(--accent) 24%, transparent);
+      grid-template-columns: 1fr auto;
+      gap: 0.65rem;
     }
     .size-select {
       min-width: 0;
-      border: 0;
-      border-right: 1px solid var(--border);
+      border: 1px solid var(--border);
       background: transparent;
       color: var(--ink);
       font-family: var(--font-body);
       font-size: 11px;
       letter-spacing: 0.08em;
-      padding: 0 0.9rem;
+      padding: 0.8rem;
       outline: none;
     }
     .quick-add, .view-details, .checkout-submit {
@@ -267,16 +134,15 @@
       font-size: 10px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      padding: 0.95rem 1.05rem;
-      transition: opacity 0.2s, background 0.2s, color 0.2s;
+      padding: 0.82rem 0.95rem;
+      transition: opacity 0.2s;
     }
     .quick-add:hover, .view-details:hover, .checkout-submit:hover, .cart-open:hover { opacity: 0.74; }
     .view-details {
+      grid-column: 1 / -1;
       background: transparent;
       color: var(--ink);
-      border-color: transparent;
-      border-left: 1px solid var(--border);
-      white-space: nowrap;
+      border-color: var(--border);
     }
     .filter-empty {
       display: none;
@@ -304,105 +170,33 @@
       background: rgba(14,14,14,0.46);
     }
     .product-sheet {
-      --detail-accent: #ff4fa3;
-      --detail-image: none;
       position: absolute;
-      inset: clamp(1rem, 4vw, 4rem);
-      background:
-        linear-gradient(90deg, rgba(14,14,14,0.04) 1px, transparent 1px),
-        linear-gradient(0deg, rgba(14,14,14,0.035) 1px, transparent 1px),
-        var(--cream);
-      background-size: 34px 34px;
+      inset: 4rem;
+      background: var(--cream);
       border: 1px solid var(--border);
       display: grid;
-      grid-template-columns: minmax(0, 58%) minmax(360px, 42%);
-      overflow: hidden;
-      box-shadow: 0 34px 110px rgba(14,14,14,0.34);
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+      overflow: auto;
     }
-    .product-modal[data-category="sunglasses"] .product-sheet { --detail-accent: #27d9ff; }
-    .product-modal[data-category="pants"] .product-sheet { --detail-accent: #ff6a1f; }
-    .product-modal[data-category="shirts"] .product-sheet { --detail-accent: #c9ff35; }
     .detail-gallery {
-      position: relative;
-      min-height: min(78vh, 780px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       border-right: 1px solid var(--border);
-      background: #d8d0c5;
-      overflow: hidden;
-      clip-path: polygon(0 0, 95% 0, 100% 100%, 0 100%);
-    }
-    .detail-gallery::before {
-      content: "";
-      position: absolute;
-      inset: -10%;
-      background-image: var(--detail-image);
-      background-size: cover;
-      background-position: center;
-      filter: blur(24px) saturate(0.85) brightness(0.98);
-      transform: scale(1.08);
-      opacity: 0.68;
-    }
-    .detail-gallery::after {
-      content: "GAISEN PRODUCT THEATRE";
-      position: absolute;
-      left: 1.2rem;
-      bottom: 1.2rem;
-      z-index: 3;
-      color: rgba(14,14,14,0.52);
-      font-size: 9px;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      writing-mode: vertical-rl;
+      background: #ddd8cf;
     }
     .detail-gallery img {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
       width: 100%;
       height: 100%;
       min-height: 520px;
-      object-fit: contain;
-      object-position: center;
-      padding: clamp(1.4rem, 4vw, 4rem);
-      filter: drop-shadow(0 28px 70px rgba(14,14,14,0.32));
+      object-fit: cover;
     }
-    .detail-gallery img + img {
-      inset: auto 1.2rem 1.2rem auto;
-      width: min(28%, 190px);
-      height: min(32%, 230px);
-      min-height: 0;
-      padding: 0.6rem;
-      border: 1px solid rgba(14,14,14,0.16);
-      background: rgba(245,242,236,0.7);
-      object-fit: contain;
-      opacity: 0.92;
-    }
-    .detail-gallery.is-single img + img { display: none; }
+    .detail-gallery img + img { border-left: 1px solid var(--border); }
     .detail-copy {
-      padding: clamp(1.5rem, 4vw, 4rem);
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-      gap: 1.5rem;
+      padding: 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       position: relative;
-      overflow: auto;
-    }
-    .detail-copy::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 8px;
-      background: var(--detail-accent);
-    }
-    .detail-number {
-      position: absolute;
-      right: 1.3rem;
-      top: 1rem;
-      font-family: var(--font-display);
-      font-size: clamp(72px, 10vw, 148px);
-      line-height: 0.8;
-      color: rgba(14,14,14,0.055);
-      pointer-events: none;
     }
     .close-btn {
       position: absolute;
@@ -421,179 +215,52 @@
       letter-spacing: 0.24em;
       text-transform: uppercase;
       color: var(--ink-faint);
-      margin-bottom: 1rem;
+      margin-bottom: 1.3rem;
     }
     .detail-title {
       font-family: var(--font-display);
-      font-size: clamp(52px, 7vw, 104px);
+      font-size: clamp(38px, 5vw, 64px);
       font-weight: 300;
-      line-height: 0.88;
+      line-height: 1;
       margin-bottom: 1rem;
-      max-width: 720px;
     }
     .detail-desc {
       color: var(--ink-light);
       font-size: 13px;
       line-height: 2;
-      margin: 1.5rem 0;
+      margin: 1.5rem 0 2rem;
       max-width: 520px;
-    }
-    .detail-price-line {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 0.9rem;
-      align-items: center;
-      border: 1px solid var(--border);
-      background: rgba(245,242,236,0.76);
-      width: min(100%, 520px);
-    }
-    .detail-price-line span {
-      padding: 0.9rem 1rem;
-      font-size: 10px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-    }
-    .detail-price-line .buy-price {
-      border: 0;
-      border-left: 1px solid var(--border);
-      background: var(--ink);
-      color: var(--cream);
-      padding: 0.9rem 1.1rem;
-    }
-    .detail-specs {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      border: 1px solid var(--border);
-      width: min(100%, 520px);
-      margin-top: 1.4rem;
-    }
-    .detail-specs p {
-      padding: 0.8rem;
-      border-right: 1px solid var(--border);
-      font-size: 9px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-    }
-    .detail-specs p:last-child { border-right: 0; }
-    .detail-specs strong {
-      display: block;
-      margin-top: 0.35rem;
-      color: var(--ink);
-      font-size: 10px;
-      letter-spacing: 0.1em;
-    }
-    .detail-route {
-      display: grid;
-      grid-template-columns: minmax(130px, 190px) auto;
-      border: 1px solid var(--border);
-      width: fit-content;
-      max-width: 100%;
-      box-shadow: -8px 8px 0 color-mix(in srgb, var(--detail-accent) 26%, transparent);
-    }
-    .detail-route .size-select {
-      min-height: 54px;
-      border: 0;
-      border-right: 1px solid var(--border);
-    }
-    .detail-route .quick-add {
-      min-height: 54px;
     }
     .cart-sheet {
       position: absolute;
       top: 0;
       right: 0;
-      width: min(720px, 100%);
+      width: min(520px, 100%);
       height: 100%;
-      background:
-        linear-gradient(90deg, rgba(14,14,14,0.035) 1px, transparent 1px),
-        linear-gradient(0deg, rgba(14,14,14,0.03) 1px, transparent 1px),
-        var(--cream);
-      background-size: 36px 36px;
+      background: var(--cream);
       border-left: 1px solid var(--border);
       display: flex;
       flex-direction: column;
     }
-    .cart-head, .cart-foot { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); }
-    .cart-head {
-      position: relative;
-      min-height: 172px;
-      background:
-        radial-gradient(circle at 74% 24%, rgba(255,79,163,0.34), rgba(255,79,163,0) 24%),
-        radial-gradient(circle at 94% 84%, rgba(201,255,53,0.24), rgba(201,255,53,0) 22%),
-        var(--ink);
-      color: var(--cream);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-    .cart-head::after {
-      content: "PAY ROOM";
-      position: absolute;
-      right: -0.25rem;
-      bottom: -0.4rem;
-      font-family: var(--font-display);
-      font-size: clamp(78px, 11vw, 132px);
-      line-height: 0.8;
-      color: rgba(245,242,236,0.07);
-      pointer-events: none;
-    }
-    .cart-kicker {
-      font-size: 9px;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: rgba(245,242,236,0.62);
-      margin-bottom: 0.6rem;
-      position: relative;
-      z-index: 1;
-    }
+    .cart-head, .cart-foot { padding: 1.25rem; border-bottom: 1px solid var(--border); }
+    .cart-head { position: relative; }
     .cart-title {
       font-family: var(--font-display);
-      font-size: clamp(46px, 8vw, 78px);
+      font-size: 34px;
       font-weight: 300;
-      line-height: 0.9;
-      position: relative;
-      z-index: 1;
+      line-height: 1.1;
     }
-    .pay-room-copy {
-      margin-top: 0.8rem;
-      max-width: 390px;
-      color: rgba(245,242,236,0.68);
-      font-size: 12px;
-      line-height: 1.8;
-      position: relative;
-      z-index: 1;
-    }
-    .pay-stamp {
-      position: absolute;
-      top: 1.1rem;
-      right: 4.3rem;
-      z-index: 1;
-      border: 1px solid rgba(245,242,236,0.32);
-      color: rgba(245,242,236,0.72);
-      padding: 0.45rem 0.65rem;
-      font-size: 9px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-    }
-    .cart-head .close-btn {
-      border-color: rgba(245,242,236,0.28);
-      color: var(--cream);
-      z-index: 2;
-    }
-    .cart-items { padding: 1rem 1.5rem; overflow: auto; flex: 1; }
+    .cart-items { padding: 1rem 1.25rem; overflow: auto; flex: 1; }
     .cart-item {
       display: grid;
-      grid-template-columns: 82px 1fr auto;
-      gap: 1rem;
-      padding: 1rem 0;
+      grid-template-columns: 76px 1fr auto;
+      gap: 0.9rem;
+      padding: 0.85rem 0;
       border-bottom: 1px solid var(--border);
       align-items: center;
     }
     .cart-item img {
-      width: 82px;
+      width: 76px;
       aspect-ratio: 3 / 4;
       object-fit: cover;
       background: #ddd8cf;
@@ -616,84 +283,15 @@
     }
     .checkout-form {
       display: grid;
-      gap: 1.1rem;
-      padding: 1.5rem;
+      gap: 0.75rem;
+      padding: 1.25rem;
       border-top: 1px solid var(--border);
-      background: rgba(248,245,239,0.92);
     }
     .checkout-form label {
       font-size: 9px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--ink-faint);
-    }
-    .checkout-section {
-      border: 1px solid var(--border);
-      background: var(--cream);
-      box-shadow: 8px 8px 0 rgba(14,14,14,0.035);
-    }
-    .checkout-section-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      padding: 0.85rem 1rem;
-      border-bottom: 1px solid var(--border);
-      font-size: 10px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-    }
-    .checkout-section-title span:last-child {
-      color: var(--ink-faint);
-      font-size: 9px;
-    }
-    .checkout-fields {
-      display: grid;
-      gap: 0.85rem;
-      padding: 1rem;
-    }
-    .pay-passport {
-      border: 1px solid var(--ink);
-      background: var(--ink);
-      color: var(--cream);
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 1rem;
-      align-items: stretch;
-      overflow: hidden;
-    }
-    .pay-code {
-      min-width: 170px;
-      padding: 1rem;
-      border-right: 1px solid rgba(245,242,236,0.18);
-    }
-    .pay-code span,
-    .pay-route span {
-      display: block;
-      color: rgba(245,242,236,0.56);
-      font-size: 9px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      margin-bottom: 0.45rem;
-    }
-    .pay-code strong {
-      display: block;
-      font-family: var(--font-display);
-      font-size: 28px;
-      font-weight: 300;
-      letter-spacing: 0.04em;
-    }
-    .pay-route {
-      padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .pay-route p {
-      color: rgba(245,242,236,0.74);
-      font-size: 12px;
-      line-height: 1.75;
-      max-width: 390px;
     }
     .checkout-form input, .checkout-form select {
       width: 100%;
@@ -703,56 +301,7 @@
       font-family: var(--font-body);
       color: var(--ink);
     }
-    .pay-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.65rem; }
-    .pay-option input {
-      position: absolute;
-      opacity: 0;
-      pointer-events: none;
-    }
-    .pay-option span {
-      display: block;
-      border: 1px solid var(--border);
-      padding: 0.95rem 0.75rem;
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      cursor: pointer;
-      min-height: 88px;
-      transition: background 0.2s, color 0.2s, border-color 0.2s;
-      position: relative;
-      overflow: hidden;
-    }
-    .pay-option span::after {
-      content: "";
-      position: absolute;
-      width: 30px;
-      height: 30px;
-      right: -10px;
-      bottom: -10px;
-      border: 1px solid currentColor;
-      opacity: 0.22;
-      transform: rotate(45deg);
-    }
-    .pay-option strong {
-      display: block;
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      margin-bottom: 0.55rem;
-    }
-    .pay-option small {
-      display: block;
-      color: var(--ink-faint);
-      font-size: 9px;
-      letter-spacing: 0.1em;
-      line-height: 1.45;
-      text-transform: none;
-    }
-    .pay-option input:checked + span {
-      background: var(--ink);
-      color: var(--cream);
-      border-color: var(--ink);
-    }
-    .pay-option input:checked + span small { color: rgba(245,242,236,0.62); }
+    .pay-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
     .cart-total {
       display: flex;
       justify-content: space-between;
@@ -761,283 +310,26 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
-    .cart-lines {
-      display: grid;
-      gap: 0.55rem;
-      margin-bottom: 1rem;
-      color: var(--ink-light);
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-    .cart-lines p {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-    }
     .checkout-note {
       min-height: 1.4rem;
       color: var(--ink-light);
       font-size: 11px;
       line-height: 1.6;
     }
-    .checkout-submit {
-      min-height: 54px;
-      position: relative;
-      overflow: hidden;
-    }
-    .checkout-submit::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(245,242,236,0.18), transparent);
-      transform: translateX(-100%);
-      transition: transform 0.45s ease;
-    }
-    .checkout-submit:hover::after { transform: translateX(100%); }
-    .filter-btn,
-    .cart-open,
-    .quick-add,
-    .view-details,
-    .checkout-submit,
-    .remove-item,
-    .pay-option span {
-      --button-glow: var(--accent, #ff3d9a);
-      --button-spark: #c9ff35;
-      position: relative;
-      isolation: isolate;
-      overflow: hidden;
-      transform: translateZ(0);
-      transition:
-        transform 0.24s ease,
-        box-shadow 0.24s ease,
-        border-color 0.24s ease,
-        background 0.24s ease,
-        color 0.24s ease,
-        opacity 0.2s ease;
-    }
-    .close-btn {
-      --button-glow: #ff3d9a;
-      --button-spark: #c9ff35;
-      isolation: isolate;
-      overflow: hidden;
-      transform: translateZ(0);
-      transition:
-        transform 0.24s ease,
-        box-shadow 0.24s ease,
-        border-color 0.24s ease,
-        background 0.24s ease,
-        color 0.24s ease;
-    }
-    .filter-btn::before,
-    .cart-open::before,
-    .quick-add::before,
-    .view-details::before,
-    .checkout-submit::before,
-    .close-btn::before,
-    .remove-item::before,
-    .pay-option span::before {
-      content: "";
-      position: absolute;
-      inset: -2px;
-      z-index: 0;
-      pointer-events: none;
-      background:
-        linear-gradient(105deg, transparent 0 34%, rgba(255,255,255,0.34) 46%, transparent 58%),
-        linear-gradient(90deg, color-mix(in srgb, var(--button-glow) 26%, transparent), transparent 48%, color-mix(in srgb, var(--button-spark) 20%, transparent));
-      opacity: 0;
-      transform: translateX(-110%) skewX(-14deg);
-      transition: opacity 0.24s ease, transform 0.58s ease;
-    }
-    .filter-btn:hover,
-    .cart-open:hover,
-    .quick-add:hover,
-    .view-details:hover,
-    .checkout-submit:hover,
-    .pay-option span:hover {
-      opacity: 1;
-      transform: translateY(-2px);
-      box-shadow: 0 14px 34px rgba(14,14,14,0.13);
-    }
-    .filter-btn:hover::before,
-    .cart-open:hover::before,
-    .quick-add:hover::before,
-    .view-details:hover::before,
-    .checkout-submit:hover::before,
-    .close-btn:hover::before,
-    .remove-item:hover::before,
-    .pay-option span:hover::before {
-      opacity: 1;
-      transform: translateX(110%) skewX(-14deg);
-    }
-    .filter-btn.active {
-      transform: translateY(-1px);
-      box-shadow: 0 10px 26px rgba(14,14,14,0.1);
-    }
-    .close-btn:hover,
-    .remove-item:hover {
-      background: var(--ink);
-      border-color: var(--ink);
-      color: var(--cream);
-      transform: rotate(90deg) scale(1.04);
-      box-shadow: 0 12px 30px rgba(14,14,14,0.12);
-    }
-    .cart-head .close-btn:hover {
-      background: var(--cream);
-      color: var(--ink);
-      border-color: var(--cream);
-    }
-    .filter-btn:active,
-    .cart-open:active,
-    .quick-add:active,
-    .view-details:active,
-    .checkout-submit:active,
-    .pay-option span:active {
-      transform: translateY(0) scale(0.97);
-      transition-duration: 0.32s;
-    }
-    .close-btn:active,
-    .remove-item:active {
-      transform: rotate(90deg) scale(0.96);
-      transition-duration: 0.32s;
-    }
-    .filter-btn.is-clicking,
-    .cart-open.is-clicking,
-    .quick-add.is-clicking,
-    .view-details.is-clicking,
-    .checkout-submit.is-clicking,
-    .pay-option span.is-clicking {
-      opacity: 1;
-      animation: shopButtonClickHold 0.68s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 18px 42px rgba(14,14,14,0.16);
-    }
-    .close-btn.is-clicking,
-    .remove-item.is-clicking {
-      animation: closeButtonClickHold 0.68s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 18px 42px rgba(14,14,14,0.16);
-    }
-    .filter-btn.is-clicking::before,
-    .cart-open.is-clicking::before,
-    .quick-add.is-clicking::before,
-    .view-details.is-clicking::before,
-    .checkout-submit.is-clicking::before,
-    .close-btn.is-clicking::before,
-    .remove-item.is-clicking::before,
-    .pay-option span.is-clicking::before {
-      opacity: 1;
-      transform: translateX(110%) skewX(-14deg);
-      transition-duration: 0.78s;
-    }
-    @keyframes shopButtonClickHold {
-      0% { transform: translateY(0) scale(0.97); }
-      38% { transform: translateY(1px) scale(0.93); }
-      72% { transform: translateY(-2px) scale(1.015); }
-      100% { transform: translateY(-1px) scale(1); }
-    }
-    @keyframes closeButtonClickHold {
-      0% { transform: rotate(0deg) scale(0.98); }
-      42% { transform: rotate(90deg) scale(0.94); }
-      100% { transform: rotate(90deg) scale(1); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .filter-btn,
-      .cart-open,
-      .quick-add,
-      .view-details,
-      .checkout-submit,
-      .close-btn,
-      .remove-item,
-      .pay-option span,
-      .filter-btn::before,
-      .cart-open::before,
-      .quick-add::before,
-      .view-details::before,
-      .checkout-submit::before,
-      .close-btn::before,
-      .remove-item::before,
-      .pay-option span::before {
-        transition: none;
-        animation: none;
-      }
-
-      .filter-btn:hover,
-      .cart-open:hover,
-      .quick-add:hover,
-      .view-details:hover,
-      .checkout-submit:hover,
-      .close-btn:hover,
-      .remove-item:hover,
-      .pay-option span:hover {
-        transform: none;
-      }
-    }
     body.modal-lock { overflow: hidden; }
     @media (max-width: 1100px) {
+      .shop-menu { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .shop-filter-panel { grid-template-columns: auto 1fr auto; }
       .shop-filter-panel .cart-open { grid-column: 3; grid-row: 1 / span 2; }
     }
     @media (max-width: 800px) {
-      .shop-menu {
-        gap: 1rem;
-      }
-      .shop-menu { padding: 1rem; }
-      .buy-card,
-      .buy-card:nth-of-type(even) {
-        min-height: 0;
-        grid-template-columns: 1fr;
-      }
-      .buy-card::before {
-        top: 0.7rem;
-        right: 0.8rem;
-        font-size: clamp(70px, 22vw, 128px);
-      }
-      .buy-image,
-      .buy-card:nth-of-type(even) .buy-image {
-        grid-column: 1;
-        grid-row: 1;
-        min-height: 360px;
-        clip-path: polygon(0 0, 100% 0, 100% 90%, 92% 100%, 0 100%);
-        border-right: 0;
-        border-left: 0;
-        border-bottom: 1px solid var(--border);
-      }
-      .buy-info,
-      .buy-card:nth-of-type(even) .buy-info {
-        grid-column: 1;
-        grid-row: 2;
-      }
-      .buy-line { grid-template-columns: 1fr; }
-      .quick-actions {
-        width: 100%;
-        grid-template-columns: 1fr 1fr;
-      }
-      .size-select {
-        grid-column: 1 / -1;
-        min-height: 48px;
-        border-right: 0;
-        border-bottom: 1px solid var(--border);
-      }
+      .shop-menu { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .product-sheet {
         inset: 0;
         grid-template-columns: 1fr;
-        overflow: auto;
       }
-      .detail-gallery {
-        min-height: 48vh;
-        clip-path: none;
-        border-right: 0;
-        border-bottom: 1px solid var(--border);
-      }
-      .detail-gallery img {
-        min-height: 340px;
-        padding: 1.1rem;
-      }
-      .detail-specs { grid-template-columns: 1fr; }
-      .detail-specs p {
-        border-right: 0;
-        border-bottom: 1px solid var(--border);
-      }
-      .detail-specs p:last-child { border-bottom: 0; }
+      .detail-gallery { border-right: 0; border-bottom: 1px solid var(--border); }
+      .detail-gallery img { min-height: 340px; }
     }
     @media (max-width: 620px) {
       .shop-filter-panel {
@@ -1046,24 +338,11 @@
         padding: 1rem 1.25rem;
       }
       .shop-filter-panel .cart-open { grid-column: auto; grid-row: auto; }
-      .shop-menu { gap: 0.9rem; }
-      .buy-info { padding: 1.1rem; }
-      .buy-name { font-size: clamp(34px, 13vw, 54px); }
-      .buy-desc { font-size: 12px; }
-      .pay-passport { grid-template-columns: 1fr; }
-      .pay-code {
-        border-right: 0;
-        border-bottom: 1px solid rgba(245,242,236,0.18);
-      }
-      .pay-grid { grid-template-columns: 1fr 1fr; }
+      .shop-menu { grid-template-columns: 1fr; }
       .page-header { padding-left: 1.25rem; padding-right: 1.25rem; }
-      .detail-gallery img + img { display: none; }
+      .detail-gallery { grid-template-columns: 1fr; }
+      .detail-gallery img + img { border-left: 0; border-top: 1px solid var(--border); }
       .detail-copy { padding: 2rem 1.25rem; }
-      .detail-title { font-size: clamp(42px, 16vw, 68px); }
-      .detail-route {
-        width: 100%;
-        grid-template-columns: 1fr 1fr;
-      }
     }
   </style>
 </head>
@@ -1102,13 +381,14 @@
         <button class="filter-btn" type="button" data-filter="shirts">Shirts</button>
         <button class="filter-btn" type="button" data-filter="sunglasses">Glasses</button>
         <button class="filter-btn" type="button" data-filter="pants">Pants</button>
+        <button class="filter-btn" type="button" data-filter="jeans">Jeans</button>
       </div>
       <button class="cart-open" type="button" data-open-cart>Checkout <span data-cart-count>0</span></button>
     </section>
 
     <section class="filter-empty" id="filterEmpty">
       <h2>No pieces match this selection.</h2>
-      <p>Try another audience or category. The collection is built around jerseys first, with pants, tees, and eyewear supporting the uniform.</p>
+      <p>Try another audience or category. The collection is built around jerseys first, with pants, denim, tees, and eyewear supporting the uniform.</p>
     </section>
 
     <section class="shop-menu" id="shopMenu" aria-label="Products"></section>
@@ -1123,22 +403,11 @@
       </div>
       <div class="detail-copy">
         <button class="close-btn" type="button" data-close-modal aria-label="Close product">x</button>
-        <p class="detail-number" id="modalNumber">01</p>
-        <div>
-          <p class="detail-kicker" id="modalKicker"></p>
-          <h2 class="detail-title" id="modalTitle"></h2>
-          <div class="detail-price-line">
-            <span>Product value</span>
-            <p class="buy-price" id="modalPrice"></p>
-          </div>
-          <p class="detail-desc" id="modalDesc"></p>
-          <div class="detail-specs">
-            <p>Archive<strong id="modalArchive">01</strong></p>
-            <p>Category<strong id="modalCategory">Jersey</strong></p>
-            <p>Sizes<strong id="modalSizeRange">XS-XL</strong></p>
-          </div>
-        </div>
-        <div class="detail-route">
+        <p class="detail-kicker" id="modalKicker"></p>
+        <h2 class="detail-title" id="modalTitle"></h2>
+        <p class="buy-price" id="modalPrice"></p>
+        <p class="detail-desc" id="modalDesc"></p>
+        <div class="quick-actions">
           <select class="size-select" id="modalSize" aria-label="Select size"></select>
           <button class="quick-add" type="button" id="modalAdd">Add</button>
         </div>
@@ -1150,66 +419,34 @@
     <div class="modal-backdrop" data-close-cart></div>
     <div class="cart-sheet" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
       <div class="cart-head">
-        <p class="pay-stamp">Secure route</p>
-        <p class="cart-kicker">Gaisen private checkout</p>
-        <h2 class="cart-title" id="cartTitle">Pay Room</h2>
-        <p class="pay-room-copy">A clean payment request system for the drop: review the order, choose the route, send the secure request.</p>
+        <h2 class="cart-title" id="cartTitle">Bag</h2>
         <button class="close-btn" type="button" data-close-cart aria-label="Close bag">x</button>
       </div>
       <div class="cart-items" id="cartItems"></div>
       <div class="cart-foot">
-        <div class="cart-lines">
-          <p><span>Subtotal</span><strong id="cartSubtotal">EUR 0</strong></p>
-          <p><span>Delivery</span><strong id="cartShipping">Included</strong></p>
-        </div>
         <p class="cart-total"><span>Total</span><strong id="cartTotal">EUR 0</strong></p>
       </div>
       <form class="checkout-form" id="checkoutForm">
-        <div class="pay-passport" aria-label="Order passport">
-          <div class="pay-code">
-            <span>Order code</span>
-            <strong id="orderCode">GSN-0000</strong>
+        <label for="customerName">Name</label>
+        <input id="customerName" autocomplete="name" required>
+        <label for="customerEmail">Email</label>
+        <input id="customerEmail" type="email" autocomplete="email" required>
+        <div class="pay-grid">
+          <div>
+            <label for="paymentMethod">Payment</label>
+            <select id="paymentMethod">
+              <option>Card</option>
+              <option>PayPal</option>
+              <option>Apple Pay</option>
+              <option>Bank transfer</option>
+            </select>
           </div>
-          <div class="pay-route">
-            <span>Route</span>
-            <p>No card data is stored here. Connect Stripe or PayPal later for automatic payment, or send the order request now.</p>
-          </div>
-        </div>
-        <section class="checkout-section">
-          <div class="checkout-section-title"><span>01 Client</span><span>Contact</span></div>
-          <div class="checkout-fields">
-            <label for="customerName">Name</label>
-            <input id="customerName" autocomplete="name" required>
-            <label for="customerEmail">Email</label>
-            <input id="customerEmail" type="email" autocomplete="email" required>
+          <div>
             <label for="country">Country</label>
             <input id="country" autocomplete="country-name" value="Germany">
           </div>
-        </section>
-        <section class="checkout-section">
-          <div class="checkout-section-title"><span>02 Method</span><span>Payment</span></div>
-          <div class="checkout-fields">
-            <div class="pay-grid" role="radiogroup" aria-label="Payment method">
-              <label class="pay-option">
-                <input type="radio" name="paymentMethod" value="Card" checked>
-                <span><strong>Card</strong><small>Best with Stripe link</small></span>
-              </label>
-              <label class="pay-option">
-                <input type="radio" name="paymentMethod" value="PayPal">
-                <span><strong>PayPal</strong><small>Fast wallet route</small></span>
-              </label>
-              <label class="pay-option">
-                <input type="radio" name="paymentMethod" value="Apple Pay">
-                <span><strong>Apple</strong><small>Mobile checkout</small></span>
-              </label>
-              <label class="pay-option">
-                <input type="radio" name="paymentMethod" value="Bank transfer">
-                <span><strong>Transfer</strong><small>Manual invoice</small></span>
-              </label>
-            </div>
-          </div>
-        </section>
-        <button class="checkout-submit" type="submit">Create payment request</button>
+        </div>
+        <button class="checkout-submit" type="submit">Pay now</button>
         <p class="checkout-note" id="checkoutNote"></p>
       </form>
     </div>
@@ -1244,53 +481,66 @@
     const products = [
       { id: "jersey-blanc", name: "Jersey Blanc", price: 175, category: "jersey", audience: ["men","women"], image: "white-jersey-front.png", second: "white-jersey-back.png", sizes: ["XS","S","M","L","XL"], desc: "Oversized American football jersey in white mesh fabric with black stripe details and GAISEN back print." },
       { id: "football-jersey-noir", name: "Football Jersey Noir", price: 185, category: "jersey", audience: ["men","women"], image: "gaisen-football-jersey-noir.png", sizes: ["XS","S","M","L","XL"], desc: "Black mesh football jersey with cream stripes and the Gaisen house number 82." },
+      { id: "football-jersey-creme", name: "Football Jersey Creme", price: 185, category: "jersey", audience: ["men","women"], image: "gaisen-football-jersey-creme.png", sizes: ["XS","S","M","L","XL"], desc: "Cream American football jersey with black collar and clean house trim." },
+      { id: "football-jersey-blush", name: "Football Jersey Blush", price: 190, category: "jersey", audience: ["men","women"], image: "gaisen-football-jersey-blush.png", sizes: ["XS","S","M","L","XL"], desc: "Cream mesh and black athletic trim with a muted blush number treatment." },
+      { id: "football-jersey-ember", name: "Football Jersey Ember", price: 190, category: "jersey", audience: ["men","women"], image: "gaisen-football-jersey-ember.png", sizes: ["XS","S","M","L","XL"], desc: "Black mesh football jersey with restrained cream striping and warm ember details." },
+      { id: "football-jersey-rose-24", name: "Football Jersey Rose 24", price: 195, category: "jersey", audience: ["men","women"], image: "gaisen-football-jersey-rose-24.png", sizes: ["XS","S","M","L","XL"], desc: "Cream mesh football jersey with a dusty rose number and black athletic trim." },
+      { id: "football-jersey-umber-19", name: "Football Jersey Umber 19", price: 195, category: "jersey", audience: ["men","women"], image: "gaisen-football-jersey-umber-19.png", sizes: ["XS","S","M","L","XL"], desc: "Dark football jersey variation with warm umber numbering and a controlled athletic silhouette." },
+      { id: "football-jersey-terracotta-06", name: "Football Jersey Terracotta 06", price: 195, category: "jersey", audience: ["men","women"], image: "gaisen-football-jersey-terracotta-06.png", sizes: ["XS","S","M","L","XL"], desc: "Cream jersey base with terracotta numbering and black trim." },
+      { id: "basketball-jersey-rose-court", name: "Basketball Jersey Rose Court", price: 175, category: "jersey", audience: ["men","women"], image: "gaisen-basketball-jersey-rose-court.png", sizes: ["XS","S","M","L","XL"], desc: "Sleeveless basketball jersey with rose court color and wide body proportions." },
+      { id: "basketball-jersey-ochre-82", name: "Basketball Jersey Ochre 82", price: 175, category: "jersey", audience: ["men","women"], image: "gaisen-basketball-jersey-ochre-82.png", sizes: ["XS","S","M","L","XL"], desc: "Court mesh basketball jersey in ochre with house number 82." },
       { id: "rugby-polo-ember-stripe", name: "Rugby Polo Ember Stripe", price: 225, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-ember-stripe.png", sizes: ["XS","S","M","L","XL"], desc: "Structured rugby polo with ember stripe detail and formal athletic shape." },
       { id: "rugby-polo-blush-stripe", name: "Rugby Polo Blush Stripe", price: 225, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-blush-stripe.png", sizes: ["XS","S","M","L","XL"], desc: "Rugby polo jersey with a blush stripe and clean house collar." },
       { id: "cropped-jersey-rose-07", name: "Cropped Jersey Rose 07", price: 165, category: "jersey", audience: ["women"], image: "gaisen-cropped-jersey-rose-07.png", sizes: ["XS","S","M","L"], desc: "Cropped athletic jersey with rose number treatment and short body proportion." },
       { id: "tee-noir", name: "Classic Tee Noir", price: 120, category: "shirts", audience: ["men","women"], image: "tshirt-front.png", second: "tshirt-back.png", sizes: ["XS","S","M","L","XL"], desc: "Heavyweight black tee with front mark and large GAISEN back print." },
-      { id: "eclipse-sunglasses", name: "Eclipse Sunglasses Noir", price: 240, category: "sunglasses", audience: ["men","women"], image: "gaisen-eclipse-generated.png", sizes: ["One size"], desc: "Rimless black lens sunglasses with a sharp optic-house profile." },
-      { id: "axis-shield-noir", name: "Axis Shield Noir", price: 280, category: "sunglasses", audience: ["men","women"], image: "gaisen-axis-shield.png", sizes: ["One size"], desc: "Shield sunglasses with a stronger sport profile and black lens treatment." },
-      { id: "studio-frame-clear", name: "Studio Frame Clear", price: 220, category: "sunglasses", audience: ["men","women"], image: "gaisen-studio-frame.png", sizes: ["One size"], desc: "Clear studio frame with a quiet rectangular optic silhouette." },
-      { id: "halo-rimless-smoke", name: "Halo Rimless Smoke", price: 265, category: "sunglasses", audience: ["men","women"], image: "gaisen-halo-rimless.png", sizes: ["One size"], desc: "Smoke rimless frame designed as the softer eyewear piece of the house." },
+      { id: "eclipse-sunglasses", name: "Eclipse Sunglasses Noir", price: 240, category: "sunglasses", audience: ["men","women"], image: "gaisen-eclipse-generated.png", second: "sunglasses-campaign.png", sizes: ["One size"], desc: "Rimless black lens sunglasses with a sharp optic-house profile." },
+      { id: "axis-shield-noir", name: "Axis Shield Noir", price: 280, category: "sunglasses", audience: ["men","women"], image: "gaisen-axis-shield.png", second: "sunglasses-product.png", sizes: ["One size"], desc: "Shield sunglasses with a stronger sport profile and black lens treatment." },
+      { id: "studio-frame-clear", name: "Studio Frame Clear", price: 220, category: "sunglasses", audience: ["men","women"], image: "gaisen-studio-frame.png", second: "sunglasses-product.png", sizes: ["One size"], desc: "Clear studio frame with a quiet rectangular optic silhouette." },
+      { id: "halo-rimless-smoke", name: "Halo Rimless Smoke", price: 265, category: "sunglasses", audience: ["men","women"], image: "gaisen-halo-rimless.png", second: "sunglasses-campaign.png", sizes: ["One size"], desc: "Smoke rimless frame designed as the softer eyewear piece of the house." },
+      { id: "court-mesh-jersey", name: "Court Mesh Jersey Noir", price: 185, category: "jersey", audience: ["men","women"], image: "gaisen-court-mesh-jersey.png", sizes: ["XS","S","M","L","XL"], desc: "Boxy court mesh jersey with a wide shoulder and house number 26." },
       { id: "rugby-polo-jersey", name: "Rugby Polo Jersey Creme", price: 210, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-jersey.png", sizes: ["XS","S","M","L","XL"], desc: "Heavy collar rugby-polo hybrid for a more formal jersey language." },
       { id: "rugby-polo-noir", name: "Rugby Polo Noir", price: 215, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-noir.png", sizes: ["XS","S","M","L","XL"], desc: "Black rugby-polo jersey with cream collar and chest stripe." },
       { id: "rugby-polo-creme-stripe", name: "Rugby Polo Creme Stripe", price: 215, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-creme.png", sizes: ["XS","S","M","L","XL"], desc: "Cream rugby jersey with black collar, cuff, and stripe details." },
       { id: "rugby-polo-rose", name: "Rugby Polo Rose Stripe", price: 220, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-rose.png", sizes: ["XS","S","M","L","XL"], desc: "Long sleeve rugby polo with dusty rose stripe against black cotton." },
       { id: "rugby-polo-ochre", name: "Rugby Polo Ochre Stripe", price: 220, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-ochre.png", sizes: ["XS","S","M","L","XL"], desc: "Cream rugby polo with warm ochre stripe and black collar detailing." },
       { id: "cropped-jersey-femme", name: "Cropped Jersey Femme", price: 160, category: "jersey", audience: ["women"], image: "gaisen-cropped-jersey-femme.png", sizes: ["XS","S","M","L"], desc: "Women's cropped jersey with a wide athletic shoulder and abbreviated body." },
+      { id: "court-warmup-tee", name: "Court Warm-Up Tee Noir", price: 145, category: "shirts", audience: ["men","women"], image: "gaisen-court-warmup-tee.png", sizes: ["XS","S","M","L","XL"], desc: "Heavyweight warm-up tee with dropped shoulder and court proportions." },
       { id: "track-pant-noir", name: "Track Pant Noir", price: 220, category: "pants", audience: ["men","women"], image: "gaisen-track-pant-noir.png", sizes: ["XS","S","M","L","XL"], desc: "Formal track pant with a wider leg and clean side line." },
       { id: "jogger-pant-stone", name: "Jogger Pant Stone", price: 195, category: "pants", audience: ["men","women"], image: "gaisen-jogger-pant-stone.png", sizes: ["XS","S","M","L","XL"], desc: "Premium jogger with dense fleece, clean taper, and quiet Gaisen mark." }
+      ,{ id: "jogger-pant-plasma", name: "Jogger Pant Plasma", price: 205, category: "pants", audience: ["men","women"], image: "gaisen-jogger-pant-plasma.png", sizes: ["XS","S","M","L","XL"], desc: "Loud violet jogger with glossy orange house hits and a relaxed athletic leg." }
+      ,{ id: "jogger-pant-lime-smoke", name: "Jogger Pant Lime Smoke", price: 205, category: "pants", audience: ["men","women"], image: "gaisen-jogger-pant-lime-smoke.png", sizes: ["XS","S","M","L","XL"], desc: "Dark smoke jogger with acid-lime stripe energy for a sharper night uniform." }
+      ,{ id: "track-pant-cobalt-flare", name: "Track Pant Cobalt Flare", price: 230, category: "pants", audience: ["men","women"], image: "gaisen-track-pant-cobalt-flare.png", sizes: ["XS","S","M","L","XL"], desc: "Cobalt track pant with hot-pink flare detailing and a wide, clean movement line." }
+      ,{ id: "track-pant-copper-gloss", name: "Track Pant Copper Gloss", price: 235, category: "pants", audience: ["men","women"], image: "gaisen-track-pant-copper-gloss.png", sizes: ["XS","S","M","L","XL"], desc: "Glossy copper-orange track pant with volt accents and a stronger runway sport feel." }
+      ,{ id: "cropped-jersey-ultraviolet", name: "Cropped Jersey Ultraviolet", price: 175, category: "jersey", audience: ["women"], image: "gaisen-cropped-jersey-ultraviolet.png", sizes: ["XS","S","M","L"], desc: "Cropped jersey in ultraviolet with hot-pink hits, built from the same wide-shoulder Gaisen code." }
+      ,{ id: "cropped-jersey-heatwave", name: "Cropped Jersey Heatwave", price: 175, category: "jersey", audience: ["women"], image: "gaisen-cropped-jersey-heatwave.png", sizes: ["XS","S","M","L"], desc: "Short-body heat red cropped jersey with electric blue contrast and glossy number work." }
+      ,{ id: "basketball-jersey-neon-orbit", name: "Basketball Jersey Neon Orbit", price: 185, category: "jersey", audience: ["men","women"], image: "gaisen-basketball-jersey-neon-orbit.png", sizes: ["XS","S","M","L","XL"], desc: "Black court mesh basketball jersey with acid-lime orbit lines and a loud house number." }
+      ,{ id: "basketball-jersey-pink-volt", name: "Basketball Jersey Pink Volt", price: 185, category: "jersey", audience: ["men","women"], image: "gaisen-basketball-jersey-pink-volt.png", sizes: ["XS","S","M","L","XL"], desc: "Hot-pink basketball jersey with special orange contrast, made to pull eyes from distance." }
+      ,{ id: "tee-static-blue", name: "Static Tee Blue", price: 135, category: "shirts", audience: ["men","women"], image: "gaisen-tee-static-blue.png", sizes: ["XS","S","M","L","XL"], desc: "Heavy tee in saturated blue with clean white marks and a sport-broadcast feeling." }
+      ,{ id: "tee-ember-script", name: "Ember Script Tee", price: 135, category: "shirts", audience: ["men","women"], image: "gaisen-tee-ember-script.png", sizes: ["XS","S","M","L","XL"], desc: "Glossy orange tee with ultraviolet hits, made as a louder companion to the black classic tee." }
+      ,{ id: "shield-glasses-volt", name: "Shield Glasses Volt", price: 290, category: "sunglasses", audience: ["men","women"], image: "gaisen-shield-glasses-volt.png", second: "gaisen-axis-shield.png", sizes: ["One size"], desc: "Wrap sport shield glasses with volt lens energy and a sharp futuristic profile." }
+      ,{ id: "racer-glasses-magenta", name: "Racer Glasses Magenta", price: 275, category: "sunglasses", audience: ["men","women"], image: "gaisen-racer-glasses-magenta.png", second: "gaisen-halo-rimless.png", sizes: ["One size"], desc: "Fast magenta shield frame with cyan flash accents and a clean optic-house shape." }
+      ,{ id: "knee-jean-indigo-spark", name: "Knee Drop Jean Indigo Spark", price: 245, category: "jeans", audience: ["men","women"], image: "gaisen-knee-jean-indigo-spark.png", sizes: ["XS","S","M","L","XL"], desc: "Unique denim short-jean shape that drops just under the knee with orange spark seam hits." }
+      ,{ id: "knee-jean-graphite-pink", name: "Knee Drop Jean Graphite Pink", price: 245, category: "jeans", audience: ["men","women"], image: "gaisen-knee-jean-graphite-pink.png", sizes: ["XS","S","M","L","XL"], desc: "Graphite below-knee denim with hot-pink seam lines and a boxy street uniform proportion." }
     ];
 
     const state = { audience: "all", category: "all", cart: [], activeProduct: null };
     const money = value => `EUR ${value}`;
     const secondImage = product => product.second || product.image;
-    const sizeRange = product => product.sizes.length === 1 ? product.sizes[0] : `${product.sizes[0]}-${product.sizes[product.sizes.length - 1]}`;
-    const orderCode = () => {
-      const seed = state.cart.reduce((sum, item) => {
-        const product = products.find(entry => entry.id === item.productId);
-        return sum + (product ? product.price : 0) + item.size.charCodeAt(0);
-      }, state.cart.length * 91);
-      return `GSN-${String(seed % 10000).padStart(4, "0")}`;
-    };
 
     function renderProducts() {
       const menu = document.getElementById("shopMenu");
-      menu.innerHTML = products.map((product, index) => `
-        <article class="buy-card ${product.second ? "has-alt" : ""}" id="${product.id}" data-index="${String(index + 1).padStart(2, "0")}" data-id="${product.id}" data-audience="${product.audience.join(" ")}" data-category="${product.category}">
+      menu.innerHTML = products.map(product => `
+        <article class="buy-card" id="${product.id}" data-id="${product.id}" data-audience="${product.audience.join(" ")}" data-category="${product.category}">
           <div class="buy-image">
             <img src="${product.image}" alt="${product.name}" loading="lazy" decoding="async">
-            ${product.second ? `<img src="${product.second}" alt="${product.name} alternate view" loading="lazy" decoding="async">` : ""}
+            <img src="${secondImage(product)}" alt="${product.name} alternate view" loading="lazy" decoding="async">
           </div>
           <div class="buy-info">
-            <div>
-              <p class="buy-meta"><span>Archive ${String(index + 1).padStart(2, "0")}</span><span>${product.category}</span><span>${sizeRange(product)}</span></p>
-              <div class="buy-line">
-                <h2 class="buy-name">${product.name}</h2>
-                <p class="buy-price">${money(product.price)}</p>
-              </div>
+            <div class="buy-line">
+              <h2 class="buy-name">${product.name}</h2>
+              <p class="buy-price">${money(product.price)}</p>
             </div>
-            <p class="buy-desc">${product.desc}</p>
+            <p class="buy-meta">${product.category}</p>
             <div class="quick-actions">
               <select class="size-select" aria-label="Size for ${product.name}">
                 ${product.sizes.map(size => `<option>${size}</option>`).join("")}
@@ -1341,38 +591,25 @@
           </div>
         `;
       }).join("") : "<p class=\"checkout-note\">Your bag is empty.</p>";
-      document.getElementById("cartSubtotal").textContent = money(total);
       document.getElementById("cartTotal").textContent = money(total);
-      document.getElementById("orderCode").textContent = state.cart.length ? orderCode() : "GSN-0000";
       document.querySelectorAll("[data-cart-count]").forEach(node => node.textContent = state.cart.length);
     }
 
     function openProduct(productId) {
       const product = products.find(item => item.id === productId);
       if (!product) return;
-      const productIndex = products.findIndex(item => item.id === productId) + 1;
-      const archiveCode = String(productIndex).padStart(2, "0");
-      const modal = document.getElementById("productModal");
-      const sheet = document.querySelector(".product-sheet");
       state.activeProduct = product;
-      modal.dataset.category = product.category;
-      sheet.style.setProperty("--detail-image", `url("${product.image}")`);
       document.getElementById("modalImageOne").src = product.image;
       document.getElementById("modalImageOne").alt = product.name;
-      document.querySelector(".detail-gallery").classList.toggle("is-single", !product.second);
       document.getElementById("modalImageTwo").src = secondImage(product);
       document.getElementById("modalImageTwo").alt = `${product.name} alternate view`;
-      document.getElementById("modalNumber").textContent = archiveCode;
-      document.getElementById("modalArchive").textContent = archiveCode;
-      document.getElementById("modalCategory").textContent = product.category;
-      document.getElementById("modalSizeRange").textContent = sizeRange(product);
       document.getElementById("modalKicker").textContent = `Gaisen Opening - ${product.category}`;
       document.getElementById("modalTitle").textContent = product.name;
       document.getElementById("modalPrice").textContent = money(product.price);
       document.getElementById("modalDesc").textContent = product.desc;
       document.getElementById("modalSize").innerHTML = product.sizes.map(size => `<option>${size}</option>`).join("");
-      modal.classList.add("is-open");
-      modal.setAttribute("aria-hidden", "false");
+      document.getElementById("productModal").classList.add("is-open");
+      document.getElementById("productModal").setAttribute("aria-hidden", "false");
       document.body.classList.add("modal-lock");
     }
 
@@ -1434,11 +671,10 @@
         const product = products.find(entry => entry.id === item.productId);
         return `${product.name} (${item.size}) - ${money(product.price)}`;
       }).join("%0D%0A");
-      const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
       const subject = encodeURIComponent("Gaisen order request");
-      const body = `Order code: ${encodeURIComponent(orderCode())}%0D%0AName: ${encodeURIComponent(document.getElementById("customerName").value)}%0D%0AEmail: ${encodeURIComponent(document.getElementById("customerEmail").value)}%0D%0APayment: ${encodeURIComponent(paymentMethod)}%0D%0ACountry: ${encodeURIComponent(document.getElementById("country").value)}%0D%0A%0D%0AItems:%0D%0A${orderLines}`;
+      const body = `Name: ${encodeURIComponent(document.getElementById("customerName").value)}%0D%0AEmail: ${encodeURIComponent(document.getElementById("customerEmail").value)}%0D%0APayment: ${encodeURIComponent(document.getElementById("paymentMethod").value)}%0D%0ACountry: ${encodeURIComponent(document.getElementById("country").value)}%0D%0A%0D%0AItems:%0D%0A${orderLines}`;
       window.location.href = `mailto:orders@gaisen.com?subject=${subject}&body=${body}`;
-      note.textContent = "Opening the payment request. Add a Stripe or PayPal checkout link in the site file to make this button charge automatically.";
+      note.textContent = "Opening an order email. Add your Stripe or PayPal checkout link in the site file to make Pay now charge automatically.";
     });
 
     document.addEventListener("keydown", event => {
@@ -1448,7 +684,5 @@
     renderProducts();
     renderCart();
   </script>
-  <script src="button-motion.js"></script>
-  <script src="support-bot.js"></script>
 </body>
 </html>
