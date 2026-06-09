@@ -61,68 +61,197 @@
       white-space: nowrap;
     }
     .shop-menu {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: clamp(1rem, 2vw, 1.5rem);
+      padding: clamp(1rem, 3vw, 3rem);
+      background:
+        linear-gradient(90deg, rgba(14,14,14,0.045) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(14,14,14,0.035) 1px, transparent 1px),
+        var(--cream);
+      background-size: 72px 72px;
     }
     .buy-card {
-      border-right: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      background: var(--cream);
+      --accent: #ff4fa3;
+      min-height: 430px;
+      border: 1px solid var(--border);
+      background: rgba(245,242,236,0.94);
+      display: grid;
+      grid-template-columns: minmax(270px, 38%) minmax(0, 1fr);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(14,14,14,0.07);
+      transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+    }
+    .buy-card[data-category="sunglasses"] { --accent: #27d9ff; }
+    .buy-card[data-category="pants"] { --accent: #ff6a1f; }
+    .buy-card[data-category="shirts"] { --accent: #c9ff35; }
+    .buy-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(14,14,14,0.36);
+      box-shadow: 0 30px 78px rgba(14,14,14,0.14);
+    }
+    .buy-card::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 8px;
+      background: var(--accent);
+      z-index: 2;
     }
     .buy-card.is-hidden { display: none; }
+    .buy-card:nth-of-type(even) {
+      grid-template-columns: minmax(0, 1fr) minmax(270px, 38%);
+    }
+    .buy-card:nth-of-type(even) .buy-image {
+      grid-column: 2;
+      grid-row: 1;
+      border-left: 1px solid var(--border);
+      border-right: 0;
+      clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%);
+    }
+    .buy-card:nth-of-type(even) .buy-info {
+      grid-column: 1;
+      grid-row: 1;
+    }
+    .buy-card::before {
+      content: attr(data-index);
+      position: absolute;
+      right: 1.4rem;
+      top: 0.2rem;
+      font-family: var(--font-display);
+      font-size: clamp(74px, 12vw, 188px);
+      line-height: 0.82;
+      color: rgba(14,14,14,0.045);
+      z-index: 0;
+      pointer-events: none;
+    }
     .buy-image {
       position: relative;
-      aspect-ratio: 3 / 4;
+      height: 100%;
+      min-height: 430px;
       overflow: hidden;
-      background: #ddd8cf;
+      background:
+        linear-gradient(135deg, rgba(14,14,14,0.08), rgba(255,255,255,0.18)),
+        #ddd8cf;
+      border-right: 1px solid var(--border);
+      clip-path: polygon(0 0, 92% 0, 100% 100%, 0 100%);
+    }
+    .buy-image::before {
+      content: "";
+      position: absolute;
+      inset: 1rem;
+      border: 1px solid rgba(14,14,14,0.12);
+      z-index: 1;
+      pointer-events: none;
+    }
+    .buy-image::after {
+      content: "GAISEN";
+      position: absolute;
+      left: 1.2rem;
+      bottom: 1.15rem;
+      z-index: 2;
+      color: rgba(14,14,14,0.42);
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
     }
     .buy-image img {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
       object-position: center;
+      padding: clamp(1rem, 2.2vw, 2rem);
       transition: opacity 0.32s ease, transform 0.5s ease;
     }
     .buy-image img:nth-child(2) {
       opacity: 0;
       transform: scale(1.04);
     }
-    .buy-card:hover .buy-image img:first-child { opacity: 0; }
-    .buy-card:hover .buy-image img:nth-child(2) { opacity: 1; transform: scale(1); }
-    .buy-info { padding: 1rem; }
-    .buy-line {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      align-items: baseline;
-      margin-bottom: 0.55rem;
+    .buy-card.has-alt:hover .buy-image img:first-child { opacity: 0; }
+    .buy-card.has-alt:hover .buy-image img:nth-child(2) { opacity: 1; transform: scale(1); }
+    .buy-card:hover .buy-image img:first-child { transform: scale(1.025) rotate(-0.6deg); }
+    .buy-info {
+      padding: clamp(1.25rem, 3vw, 3rem);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 1.25rem;
+      position: relative;
+      z-index: 1;
     }
-    .buy-name { font-size: 12px; letter-spacing: 0.04em; line-height: 1.45; }
-    .buy-price { font-size: 12px; color: var(--ink-light); white-space: nowrap; }
+    .buy-line {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 1rem;
+      align-items: start;
+    }
+    .buy-name {
+      font-family: var(--font-display);
+      font-size: clamp(38px, 5vw, 82px);
+      font-weight: 300;
+      letter-spacing: 0;
+      line-height: 0.92;
+      max-width: 820px;
+    }
+    .buy-price {
+      border: 1px solid var(--border);
+      padding: 0.7rem 0.85rem;
+      font-size: 12px;
+      color: var(--ink);
+      white-space: nowrap;
+      background: rgba(255,255,255,0.28);
+    }
     .buy-meta {
       font-size: 9px;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--ink-faint);
-      margin-bottom: 0.85rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      align-items: center;
+    }
+    .buy-meta span {
+      border-bottom: 1px solid rgba(14,14,14,0.22);
+      padding-bottom: 0.25rem;
+    }
+    .buy-meta span:first-child {
+      color: var(--ink);
+      border-bottom-color: var(--accent);
+    }
+    .buy-desc {
+      align-self: end;
+      max-width: 560px;
+      color: var(--ink-light);
+      font-size: 13px;
+      line-height: 1.9;
     }
     .quick-actions {
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 0.65rem;
+      grid-template-columns: minmax(120px, 180px) auto auto;
+      gap: 0;
+      align-items: stretch;
+      border: 1px solid var(--border);
+      width: fit-content;
+      max-width: 100%;
+      background: rgba(245,242,236,0.78);
+      box-shadow: -8px 8px 0 color-mix(in srgb, var(--accent) 24%, transparent);
     }
     .size-select {
       min-width: 0;
-      border: 1px solid var(--border);
+      border: 0;
+      border-right: 1px solid var(--border);
       background: transparent;
       color: var(--ink);
       font-family: var(--font-body);
       font-size: 11px;
       letter-spacing: 0.08em;
-      padding: 0.8rem;
+      padding: 0 0.9rem;
       outline: none;
     }
     .quick-add, .view-details, .checkout-submit {
@@ -134,15 +263,16 @@
       font-size: 10px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      padding: 0.82rem 0.95rem;
-      transition: opacity 0.2s;
+      padding: 0.95rem 1.05rem;
+      transition: opacity 0.2s, background 0.2s, color 0.2s;
     }
     .quick-add:hover, .view-details:hover, .checkout-submit:hover, .cart-open:hover { opacity: 0.74; }
     .view-details {
-      grid-column: 1 / -1;
       background: transparent;
       color: var(--ink);
-      border-color: var(--border);
+      border-color: transparent;
+      border-left: 1px solid var(--border);
+      white-space: nowrap;
     }
     .filter-empty {
       display: none;
@@ -184,6 +314,7 @@
       border-right: 1px solid var(--border);
       background: #ddd8cf;
     }
+    .detail-gallery.is-single { grid-template-columns: 1fr; }
     .detail-gallery img {
       width: 100%;
       height: 100%;
@@ -191,6 +322,7 @@
       object-fit: cover;
     }
     .detail-gallery img + img { border-left: 1px solid var(--border); }
+    .detail-gallery.is-single img + img { display: none; }
     .detail-copy {
       padding: 3rem;
       display: flex;
@@ -235,32 +367,47 @@
       position: absolute;
       top: 0;
       right: 0;
-      width: min(520px, 100%);
+      width: min(640px, 100%);
       height: 100%;
       background: var(--cream);
       border-left: 1px solid var(--border);
       display: flex;
       flex-direction: column;
     }
-    .cart-head, .cart-foot { padding: 1.25rem; border-bottom: 1px solid var(--border); }
-    .cart-head { position: relative; }
+    .cart-head, .cart-foot { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border); }
+    .cart-head {
+      position: relative;
+      background: var(--ink);
+      color: var(--cream);
+    }
+    .cart-kicker {
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(245,242,236,0.62);
+      margin-bottom: 0.6rem;
+    }
     .cart-title {
       font-family: var(--font-display);
-      font-size: 34px;
+      font-size: 42px;
       font-weight: 300;
       line-height: 1.1;
     }
-    .cart-items { padding: 1rem 1.25rem; overflow: auto; flex: 1; }
+    .cart-head .close-btn {
+      border-color: rgba(245,242,236,0.28);
+      color: var(--cream);
+    }
+    .cart-items { padding: 1rem 1.5rem; overflow: auto; flex: 1; }
     .cart-item {
       display: grid;
-      grid-template-columns: 76px 1fr auto;
-      gap: 0.9rem;
-      padding: 0.85rem 0;
+      grid-template-columns: 82px 1fr auto;
+      gap: 1rem;
+      padding: 1rem 0;
       border-bottom: 1px solid var(--border);
       align-items: center;
     }
     .cart-item img {
-      width: 76px;
+      width: 82px;
       aspect-ratio: 3 / 4;
       object-fit: cover;
       background: #ddd8cf;
@@ -283,15 +430,40 @@
     }
     .checkout-form {
       display: grid;
-      gap: 0.75rem;
-      padding: 1.25rem;
+      gap: 1rem;
+      padding: 1.5rem;
       border-top: 1px solid var(--border);
+      background: #f8f5ef;
     }
     .checkout-form label {
       font-size: 9px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--ink-faint);
+    }
+    .checkout-section {
+      border: 1px solid var(--border);
+      background: var(--cream);
+    }
+    .checkout-section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+    .checkout-section-title span:last-child {
+      color: var(--ink-faint);
+      font-size: 9px;
+    }
+    .checkout-fields {
+      display: grid;
+      gap: 0.85rem;
+      padding: 1rem;
     }
     .checkout-form input, .checkout-form select {
       width: 100%;
@@ -302,6 +474,27 @@
       color: var(--ink);
     }
     .pay-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .pay-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .pay-option span {
+      display: block;
+      border: 1px solid var(--border);
+      padding: 0.95rem 0.8rem;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      min-height: 48px;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .pay-option input:checked + span {
+      background: var(--ink);
+      color: var(--cream);
+      border-color: var(--ink);
+    }
     .cart-total {
       display: flex;
       justify-content: space-between;
@@ -309,6 +502,20 @@
       font-size: 13px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
+    }
+    .cart-lines {
+      display: grid;
+      gap: 0.55rem;
+      margin-bottom: 1rem;
+      color: var(--ink-light);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .cart-lines p {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
     }
     .checkout-note {
       min-height: 1.4rem;
@@ -323,7 +530,43 @@
       .shop-filter-panel .cart-open { grid-column: 3; grid-row: 1 / span 2; }
     }
     @media (max-width: 800px) {
-      .shop-menu { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .shop-menu { padding: 1rem; }
+      .buy-card,
+      .buy-card:nth-of-type(even) {
+        min-height: 0;
+        grid-template-columns: 1fr;
+      }
+      .buy-card::before {
+        top: 0.7rem;
+        right: 0.8rem;
+        font-size: clamp(70px, 22vw, 128px);
+      }
+      .buy-image,
+      .buy-card:nth-of-type(even) .buy-image {
+        grid-column: 1;
+        grid-row: 1;
+        min-height: 360px;
+        clip-path: none;
+        border-right: 0;
+        border-left: 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .buy-info,
+      .buy-card:nth-of-type(even) .buy-info {
+        grid-column: 1;
+        grid-row: 2;
+      }
+      .buy-line { grid-template-columns: 1fr; }
+      .quick-actions {
+        width: 100%;
+        grid-template-columns: 1fr 1fr;
+      }
+      .size-select {
+        grid-column: 1 / -1;
+        min-height: 48px;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+      }
       .product-sheet {
         inset: 0;
         grid-template-columns: 1fr;
@@ -338,7 +581,10 @@
         padding: 1rem 1.25rem;
       }
       .shop-filter-panel .cart-open { grid-column: auto; grid-row: auto; }
-      .shop-menu { grid-template-columns: 1fr; }
+      .shop-menu { gap: 0.9rem; }
+      .buy-info { padding: 1.1rem; }
+      .buy-name { font-size: clamp(34px, 13vw, 54px); }
+      .buy-desc { font-size: 12px; }
       .page-header { padding-left: 1.25rem; padding-right: 1.25rem; }
       .detail-gallery { grid-template-columns: 1fr; }
       .detail-gallery img + img { border-left: 0; border-top: 1px solid var(--border); }
@@ -418,34 +664,54 @@
     <div class="modal-backdrop" data-close-cart></div>
     <div class="cart-sheet" role="dialog" aria-modal="true" aria-labelledby="cartTitle">
       <div class="cart-head">
-        <h2 class="cart-title" id="cartTitle">Bag</h2>
+        <p class="cart-kicker">Gaisen private checkout</p>
+        <h2 class="cart-title" id="cartTitle">Payment</h2>
         <button class="close-btn" type="button" data-close-cart aria-label="Close bag">x</button>
       </div>
       <div class="cart-items" id="cartItems"></div>
       <div class="cart-foot">
+        <div class="cart-lines">
+          <p><span>Subtotal</span><strong id="cartSubtotal">EUR 0</strong></p>
+          <p><span>Delivery</span><strong id="cartShipping">Included</strong></p>
+        </div>
         <p class="cart-total"><span>Total</span><strong id="cartTotal">EUR 0</strong></p>
       </div>
       <form class="checkout-form" id="checkoutForm">
-        <label for="customerName">Name</label>
-        <input id="customerName" autocomplete="name" required>
-        <label for="customerEmail">Email</label>
-        <input id="customerEmail" type="email" autocomplete="email" required>
-        <div class="pay-grid">
-          <div>
-            <label for="paymentMethod">Payment</label>
-            <select id="paymentMethod">
-              <option>Card</option>
-              <option>PayPal</option>
-              <option>Apple Pay</option>
-              <option>Bank transfer</option>
-            </select>
-          </div>
-          <div>
+        <section class="checkout-section">
+          <div class="checkout-section-title"><span>01 Client</span><span>Contact</span></div>
+          <div class="checkout-fields">
+            <label for="customerName">Name</label>
+            <input id="customerName" autocomplete="name" required>
+            <label for="customerEmail">Email</label>
+            <input id="customerEmail" type="email" autocomplete="email" required>
             <label for="country">Country</label>
             <input id="country" autocomplete="country-name" value="Germany">
           </div>
-        </div>
-        <button class="checkout-submit" type="submit">Pay now</button>
+        </section>
+        <section class="checkout-section">
+          <div class="checkout-section-title"><span>02 Method</span><span>Payment</span></div>
+          <div class="checkout-fields">
+            <div class="pay-grid" role="radiogroup" aria-label="Payment method">
+              <label class="pay-option">
+                <input type="radio" name="paymentMethod" value="Card" checked>
+                <span>Card</span>
+              </label>
+              <label class="pay-option">
+                <input type="radio" name="paymentMethod" value="PayPal">
+                <span>PayPal</span>
+              </label>
+              <label class="pay-option">
+                <input type="radio" name="paymentMethod" value="Apple Pay">
+                <span>Apple Pay</span>
+              </label>
+              <label class="pay-option">
+                <input type="radio" name="paymentMethod" value="Bank transfer">
+                <span>Transfer</span>
+              </label>
+            </div>
+          </div>
+        </section>
+        <button class="checkout-submit" type="submit">Continue to payment</button>
         <p class="checkout-note" id="checkoutNote"></p>
       </form>
     </div>
@@ -484,10 +750,10 @@
       { id: "rugby-polo-blush-stripe", name: "Rugby Polo Blush Stripe", price: 225, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-blush-stripe.png", sizes: ["XS","S","M","L","XL"], desc: "Rugby polo jersey with a blush stripe and clean house collar." },
       { id: "cropped-jersey-rose-07", name: "Cropped Jersey Rose 07", price: 165, category: "jersey", audience: ["women"], image: "gaisen-cropped-jersey-rose-07.png", sizes: ["XS","S","M","L"], desc: "Cropped athletic jersey with rose number treatment and short body proportion." },
       { id: "tee-noir", name: "Classic Tee Noir", price: 120, category: "shirts", audience: ["men","women"], image: "tshirt-front.png", second: "tshirt-back.png", sizes: ["XS","S","M","L","XL"], desc: "Heavyweight black tee with front mark and large GAISEN back print." },
-      { id: "eclipse-sunglasses", name: "Eclipse Sunglasses Noir", price: 240, category: "sunglasses", audience: ["men","women"], image: "gaisen-eclipse-generated.png", second: "sunglasses-campaign.png", sizes: ["One size"], desc: "Rimless black lens sunglasses with a sharp optic-house profile." },
-      { id: "axis-shield-noir", name: "Axis Shield Noir", price: 280, category: "sunglasses", audience: ["men","women"], image: "gaisen-axis-shield.png", second: "sunglasses-product.png", sizes: ["One size"], desc: "Shield sunglasses with a stronger sport profile and black lens treatment." },
-      { id: "studio-frame-clear", name: "Studio Frame Clear", price: 220, category: "sunglasses", audience: ["men","women"], image: "gaisen-studio-frame.png", second: "sunglasses-product.png", sizes: ["One size"], desc: "Clear studio frame with a quiet rectangular optic silhouette." },
-      { id: "halo-rimless-smoke", name: "Halo Rimless Smoke", price: 265, category: "sunglasses", audience: ["men","women"], image: "gaisen-halo-rimless.png", second: "sunglasses-campaign.png", sizes: ["One size"], desc: "Smoke rimless frame designed as the softer eyewear piece of the house." },
+      { id: "eclipse-sunglasses", name: "Eclipse Sunglasses Noir", price: 240, category: "sunglasses", audience: ["men","women"], image: "gaisen-eclipse-generated.png", sizes: ["One size"], desc: "Rimless black lens sunglasses with a sharp optic-house profile." },
+      { id: "axis-shield-noir", name: "Axis Shield Noir", price: 280, category: "sunglasses", audience: ["men","women"], image: "gaisen-axis-shield.png", sizes: ["One size"], desc: "Shield sunglasses with a stronger sport profile and black lens treatment." },
+      { id: "studio-frame-clear", name: "Studio Frame Clear", price: 220, category: "sunglasses", audience: ["men","women"], image: "gaisen-studio-frame.png", sizes: ["One size"], desc: "Clear studio frame with a quiet rectangular optic silhouette." },
+      { id: "halo-rimless-smoke", name: "Halo Rimless Smoke", price: 265, category: "sunglasses", audience: ["men","women"], image: "gaisen-halo-rimless.png", sizes: ["One size"], desc: "Smoke rimless frame designed as the softer eyewear piece of the house." },
       { id: "rugby-polo-jersey", name: "Rugby Polo Jersey Creme", price: 210, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-jersey.png", sizes: ["XS","S","M","L","XL"], desc: "Heavy collar rugby-polo hybrid for a more formal jersey language." },
       { id: "rugby-polo-noir", name: "Rugby Polo Noir", price: 215, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-noir.png", sizes: ["XS","S","M","L","XL"], desc: "Black rugby-polo jersey with cream collar and chest stripe." },
       { id: "rugby-polo-creme-stripe", name: "Rugby Polo Creme Stripe", price: 215, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-creme.png", sizes: ["XS","S","M","L","XL"], desc: "Cream rugby jersey with black collar, cuff, and stripe details." },
@@ -501,21 +767,25 @@
     const state = { audience: "all", category: "all", cart: [], activeProduct: null };
     const money = value => `EUR ${value}`;
     const secondImage = product => product.second || product.image;
+    const sizeRange = product => product.sizes.length === 1 ? product.sizes[0] : `${product.sizes[0]}-${product.sizes[product.sizes.length - 1]}`;
 
     function renderProducts() {
       const menu = document.getElementById("shopMenu");
-      menu.innerHTML = products.map(product => `
-        <article class="buy-card" id="${product.id}" data-id="${product.id}" data-audience="${product.audience.join(" ")}" data-category="${product.category}">
+      menu.innerHTML = products.map((product, index) => `
+        <article class="buy-card ${product.second ? "has-alt" : ""}" id="${product.id}" data-index="${String(index + 1).padStart(2, "0")}" data-id="${product.id}" data-audience="${product.audience.join(" ")}" data-category="${product.category}">
           <div class="buy-image">
             <img src="${product.image}" alt="${product.name}" loading="lazy" decoding="async">
-            <img src="${secondImage(product)}" alt="${product.name} alternate view" loading="lazy" decoding="async">
+            ${product.second ? `<img src="${product.second}" alt="${product.name} alternate view" loading="lazy" decoding="async">` : ""}
           </div>
           <div class="buy-info">
-            <div class="buy-line">
-              <h2 class="buy-name">${product.name}</h2>
-              <p class="buy-price">${money(product.price)}</p>
+            <div>
+              <p class="buy-meta"><span>Archive ${String(index + 1).padStart(2, "0")}</span><span>${product.category}</span><span>${sizeRange(product)}</span></p>
+              <div class="buy-line">
+                <h2 class="buy-name">${product.name}</h2>
+                <p class="buy-price">${money(product.price)}</p>
+              </div>
             </div>
-            <p class="buy-meta">${product.category}</p>
+            <p class="buy-desc">${product.desc}</p>
             <div class="quick-actions">
               <select class="size-select" aria-label="Size for ${product.name}">
                 ${product.sizes.map(size => `<option>${size}</option>`).join("")}
@@ -566,6 +836,7 @@
           </div>
         `;
       }).join("") : "<p class=\"checkout-note\">Your bag is empty.</p>";
+      document.getElementById("cartSubtotal").textContent = money(total);
       document.getElementById("cartTotal").textContent = money(total);
       document.querySelectorAll("[data-cart-count]").forEach(node => node.textContent = state.cart.length);
     }
@@ -576,6 +847,7 @@
       state.activeProduct = product;
       document.getElementById("modalImageOne").src = product.image;
       document.getElementById("modalImageOne").alt = product.name;
+      document.querySelector(".detail-gallery").classList.toggle("is-single", !product.second);
       document.getElementById("modalImageTwo").src = secondImage(product);
       document.getElementById("modalImageTwo").alt = `${product.name} alternate view`;
       document.getElementById("modalKicker").textContent = `Gaisen Opening - ${product.category}`;
@@ -646,10 +918,11 @@
         const product = products.find(entry => entry.id === item.productId);
         return `${product.name} (${item.size}) - ${money(product.price)}`;
       }).join("%0D%0A");
+      const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
       const subject = encodeURIComponent("Gaisen order request");
-      const body = `Name: ${encodeURIComponent(document.getElementById("customerName").value)}%0D%0AEmail: ${encodeURIComponent(document.getElementById("customerEmail").value)}%0D%0APayment: ${encodeURIComponent(document.getElementById("paymentMethod").value)}%0D%0ACountry: ${encodeURIComponent(document.getElementById("country").value)}%0D%0A%0D%0AItems:%0D%0A${orderLines}`;
+      const body = `Name: ${encodeURIComponent(document.getElementById("customerName").value)}%0D%0AEmail: ${encodeURIComponent(document.getElementById("customerEmail").value)}%0D%0APayment: ${encodeURIComponent(paymentMethod)}%0D%0ACountry: ${encodeURIComponent(document.getElementById("country").value)}%0D%0A%0D%0AItems:%0D%0A${orderLines}`;
       window.location.href = `mailto:orders@gaisen.com?subject=${subject}&body=${body}`;
-      note.textContent = "Opening an order email. Add your Stripe or PayPal checkout link in the site file to make Pay now charge automatically.";
+      note.textContent = "Opening an order email. Add your Stripe or PayPal checkout link in the site file to make this button charge automatically.";
     });
 
     document.addEventListener("keydown", event => {
@@ -659,5 +932,6 @@
     renderProducts();
     renderCart();
   </script>
+  <script src="support-bot.js"></script>
 </body>
 </html>
