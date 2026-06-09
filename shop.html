@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shop - Gaisen Opening</title>
+  <title>Shop — Gaisen Opening</title>
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -17,12 +17,13 @@
     .shop-shell { border-bottom: 1px solid var(--border); }
     .shop-filter-panel {
       position: sticky;
-      top: 0;
-      z-index: 40;
+      top: var(--nav-height);
+      z-index: 80;
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
       background: rgba(245,242,236,0.94);
       backdrop-filter: blur(14px);
+      box-shadow: 0 14px 30px rgba(14,14,14,0.045);
       padding: 1rem 3rem;
       display: grid;
       grid-template-columns: auto 1fr auto 1fr auto;
@@ -87,6 +88,7 @@
       overflow: hidden;
       box-shadow: 0 24px 60px rgba(14,14,14,0.07);
       transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+      scroll-margin-top: calc(var(--nav-height) + 96px);
     }
     .buy-card[data-category="sunglasses"] { --accent: #27d9ff; }
     .buy-card[data-category="pants"] { --accent: #ff6a1f; }
@@ -250,18 +252,135 @@
       max-width: 100%;
       background: rgba(245,242,236,0.78);
       box-shadow: -8px 8px 0 color-mix(in srgb, var(--accent) 24%, transparent);
+      position: relative;
+      z-index: 4;
     }
     .size-select {
-      min-width: 0;
-      border: 0;
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+      inset: auto;
+    }
+    .size-picker {
+      position: relative;
+      min-width: 130px;
+      background: color-mix(in srgb, var(--cream) 88%, white);
       border-right: 1px solid var(--border);
+    }
+    .size-trigger {
+      width: 100%;
+      height: 100%;
+      min-height: 50px;
+      border: 0;
+      background:
+        linear-gradient(90deg, color-mix(in srgb, var(--accent) 22%, transparent) 0 4px, transparent 4px),
+        transparent;
+      color: var(--ink);
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 0.7rem;
+      font-family: var(--font-body);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0 0.95rem 0 1.2rem;
+      text-align: left;
+      transition: background 0.22s, color 0.22s, transform 0.22s;
+    }
+    .size-trigger::before {
+      content: "Size";
+      display: block;
+      font-size: 8px;
+      letter-spacing: 0.28em;
+      color: var(--ink-faint);
+      grid-column: 1 / -1;
+      align-self: end;
+      margin-bottom: -0.45rem;
+    }
+    .size-code {
+      align-self: start;
+      padding-top: 0.28rem;
+      white-space: nowrap;
+    }
+    .size-arrow {
+      width: 20px;
+      height: 20px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid color-mix(in srgb, var(--ink) 34%, transparent);
+      font-size: 14px;
+      line-height: 1;
+      transition: transform 0.25s, background 0.25s, color 0.25s;
+    }
+    .size-picker.is-open .size-trigger {
+      background: var(--ink);
+      color: var(--cream);
+    }
+    .size-picker.is-open .size-trigger::before {
+      color: color-mix(in srgb, var(--accent) 70%, var(--cream));
+    }
+    .size-picker.is-open .size-arrow {
+      background: var(--accent);
+      color: var(--ink);
+      transform: rotate(45deg);
+    }
+    .size-menu {
+      position: absolute;
+      left: -1px;
+      bottom: calc(100% + 0.55rem);
+      width: min(260px, 76vw);
+      display: none;
+      grid-template-columns: repeat(5, minmax(44px, 1fr));
+      gap: 0;
+      border: 1px solid var(--ink);
+      background:
+        linear-gradient(90deg, color-mix(in srgb, var(--accent) 34%, transparent) 0 6px, transparent 6px),
+        color-mix(in srgb, var(--cream) 94%, white);
+      box-shadow: -10px 10px 0 color-mix(in srgb, var(--accent) 32%, transparent), 0 18px 44px rgba(14,14,14,0.16);
+      padding: 0.55rem 0.55rem 0.55rem calc(0.55rem + 6px);
+      z-index: 30;
+    }
+    .size-picker.is-open .size-menu {
+      display: grid;
+    }
+    .size-menu::before {
+      content: "Pick your cut";
+      grid-column: 1 / -1;
+      padding: 0.25rem 0.25rem 0.6rem;
+      color: var(--ink-faint);
+      font-size: 8px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+    }
+    .size-option {
+      min-height: 44px;
+      border: 1px solid rgba(14,14,14,0.14);
+      border-left: 0;
       background: transparent;
       color: var(--ink);
+      cursor: pointer;
       font-family: var(--font-body);
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      padding: 0 0.9rem;
-      outline: none;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transition: background 0.18s, color 0.18s, border-color 0.18s, transform 0.18s;
+    }
+    .size-option:first-of-type {
+      border-left: 1px solid rgba(14,14,14,0.14);
+    }
+    .size-option:hover,
+    .size-option[aria-selected="true"] {
+      background: var(--ink);
+      color: var(--cream);
+      border-color: var(--ink);
+      transform: translateY(-2px);
+    }
+    .size-option[aria-selected="true"] {
+      box-shadow: inset 0 -4px 0 var(--accent);
     }
     .quick-add, .view-details, .checkout-submit {
       border: 1px solid var(--ink);
@@ -497,11 +616,11 @@
       max-width: 100%;
       box-shadow: -8px 8px 0 color-mix(in srgb, var(--detail-accent) 26%, transparent);
     }
-    .detail-route .size-select {
+    .detail-route .size-picker {
       min-height: 54px;
-      border: 0;
       border-right: 1px solid var(--border);
     }
+    .detail-route .size-trigger { min-height: 54px; }
     .detail-route .quick-add {
       min-height: 54px;
     }
@@ -805,6 +924,8 @@
     .quick-add,
     .view-details,
     .checkout-submit,
+    .size-trigger,
+    .size-option,
     .remove-item,
     .pay-option span {
       --button-glow: var(--accent, #ff3d9a);
@@ -839,6 +960,8 @@
     .quick-add::before,
     .view-details::before,
     .checkout-submit::before,
+    .size-trigger::after,
+    .size-option::before,
     .close-btn::before,
     .remove-item::before,
     .pay-option span::before {
@@ -859,6 +982,7 @@
     .quick-add:hover,
     .view-details:hover,
     .checkout-submit:hover,
+    .size-trigger:hover,
     .pay-option span:hover {
       opacity: 1;
       transform: translateY(-2px);
@@ -869,6 +993,8 @@
     .quick-add:hover::before,
     .view-details:hover::before,
     .checkout-submit:hover::before,
+    .size-trigger:hover::after,
+    .size-option:hover::before,
     .close-btn:hover::before,
     .remove-item:hover::before,
     .pay-option span:hover::before {
@@ -897,6 +1023,8 @@
     .quick-add:active,
     .view-details:active,
     .checkout-submit:active,
+    .size-trigger:active,
+    .size-option:active,
     .pay-option span:active {
       transform: translateY(0) scale(0.97);
       transition-duration: 0.32s;
@@ -911,6 +1039,8 @@
     .quick-add.is-clicking,
     .view-details.is-clicking,
     .checkout-submit.is-clicking,
+    .size-trigger.is-clicking,
+    .size-option.is-clicking,
     .pay-option span.is-clicking {
       opacity: 1;
       animation: shopButtonClickHold 0.68s cubic-bezier(0.16, 1, 0.3, 1);
@@ -926,6 +1056,8 @@
     .quick-add.is-clicking::before,
     .view-details.is-clicking::before,
     .checkout-submit.is-clicking::before,
+    .size-trigger.is-clicking::after,
+    .size-option.is-clicking::before,
     .close-btn.is-clicking::before,
     .remove-item.is-clicking::before,
     .pay-option span.is-clicking::before {
@@ -950,6 +1082,8 @@
       .quick-add,
       .view-details,
       .checkout-submit,
+      .size-trigger,
+      .size-option,
       .close-btn,
       .remove-item,
       .pay-option span,
@@ -958,6 +1092,8 @@
       .quick-add::before,
       .view-details::before,
       .checkout-submit::before,
+      .size-trigger::after,
+      .size-option::before,
       .close-btn::before,
       .remove-item::before,
       .pay-option span::before {
@@ -970,6 +1106,8 @@
       .quick-add:hover,
       .view-details:hover,
       .checkout-submit:hover,
+      .size-trigger:hover,
+      .size-option:hover,
       .close-btn:hover,
       .remove-item:hover,
       .pay-option span:hover {
@@ -1016,11 +1154,15 @@
         width: 100%;
         grid-template-columns: 1fr 1fr;
       }
-      .size-select {
+      .quick-actions .size-picker {
         grid-column: 1 / -1;
         min-height: 48px;
         border-right: 0;
         border-bottom: 1px solid var(--border);
+      }
+      .size-menu {
+        width: calc(100% + 2px);
+        grid-template-columns: repeat(5, minmax(0, 1fr));
       }
       .product-sheet {
         inset: 0;
@@ -1069,10 +1211,13 @@
         width: 100%;
         grid-template-columns: 1fr 1fr;
       }
+      .detail-route .size-picker {
+        min-width: 0;
+      }
     }
   </style>
 </head>
-<body>
+<body class="shop-page">
 
   <nav class="nav">
     <div class="nav-left">
@@ -1113,7 +1258,7 @@
 
     <section class="filter-empty" id="filterEmpty">
       <h2>No pieces match this selection.</h2>
-      <p>Try another audience or category. The collection is built around jerseys first, with pants, tees, and eyewear supporting the uniform.</p>
+      <p>Try another audience or category. The collection starts with jerseys, with pants, tees, and eyewear supporting the uniform.</p>
     </section>
 
     <section class="shop-menu" id="shopMenu" aria-label="Products"></section>
@@ -1158,7 +1303,7 @@
         <p class="pay-stamp">Secure route</p>
         <p class="cart-kicker">Gaisen private checkout</p>
         <h2 class="cart-title" id="cartTitle">Pay Room</h2>
-        <p class="pay-room-copy">A clean payment request system for the drop: review the order, choose the route, send the secure request.</p>
+        <p class="pay-room-copy">A clean payment request system for the drop: review your order, choose a route, and send the secure request.</p>
         <button class="close-btn" type="button" data-close-cart aria-label="Close bag">x</button>
       </div>
       <div class="cart-items" id="cartItems"></div>
@@ -1177,7 +1322,7 @@
           </div>
           <div class="pay-route">
             <span>Route</span>
-            <p>No card data is stored here. Connect Stripe or PayPal later for automatic payment, or send the order request now.</p>
+            <p>No card data is stored here. Connect Stripe or PayPal later for automatic checkout, or send the order request now.</p>
           </div>
         </div>
         <section class="checkout-section">
@@ -1239,8 +1384,8 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>(c) 2026 Gaisen. All rights reserved.</p>
-      <p>Maison de Luxe - Berlin</p>
+      <p>© 2026 Gaisen. All rights reserved.</p>
+      <p>Maison de Luxe — Berlin</p>
     </div>
   </footer>
 
@@ -1248,23 +1393,23 @@
     const CHECKOUT_PAYMENT_LINK = "";
     const products = [
       { id: "jersey-blanc", name: "Jersey Blanc", price: 175, category: "jersey", audience: ["men","women"], image: "white-jersey-front.png", second: "white-jersey-back.png", sizes: ["XS","S","M","L","XL"], desc: "Oversized American football jersey in white mesh fabric with black stripe details and GAISEN back print." },
-      { id: "football-jersey-noir", name: "Football Jersey Noir", price: 185, category: "jersey", audience: ["men","women"], image: "gaisen-football-jersey-noir.png", sizes: ["XS","S","M","L","XL"], desc: "Black mesh football jersey with cream stripes and the Gaisen house number 82." },
-      { id: "rugby-polo-ember-stripe", name: "Rugby Polo Ember Stripe", price: 225, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-ember-stripe.png", sizes: ["XS","S","M","L","XL"], desc: "Structured rugby polo with ember stripe detail and formal athletic shape." },
-      { id: "rugby-polo-blush-stripe", name: "Rugby Polo Blush Stripe", price: 225, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-blush-stripe.png", sizes: ["XS","S","M","L","XL"], desc: "Rugby polo jersey with a blush stripe and clean house collar." },
-      { id: "cropped-jersey-rose-07", name: "Cropped Jersey Rose 07", price: 165, category: "jersey", audience: ["women"], image: "gaisen-cropped-jersey-rose-07.png", sizes: ["XS","S","M","L"], desc: "Cropped athletic jersey with rose number treatment and short body proportion." },
+      { id: "football-jersey-noir", name: "Football Jersey Noir", price: 185, category: "jersey", audience: ["men","women"], image: "gaisen-football-jersey-noir.png", second: "gaisen-football-jersey-noir-back.png", sizes: ["XS","S","M","L","XL"], desc: "Black mesh football jersey with cream stripes and the Gaisen house number 82." },
+      { id: "rugby-polo-ember-stripe", name: "Rugby Polo Ember Stripe", price: 225, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-ember-stripe.png", second: "gaisen-rugby-polo-ember-stripe-back.png", sizes: ["XS","S","M","L","XL"], desc: "Structured rugby polo with ember stripe detail and formal athletic shape." },
+      { id: "rugby-polo-blush-stripe", name: "Rugby Polo Blush Stripe", price: 225, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-blush-stripe.png", second: "gaisen-rugby-polo-blush-stripe-back.png", sizes: ["XS","S","M","L","XL"], desc: "Rugby polo jersey with a blush stripe and clean house collar." },
+      { id: "cropped-jersey-rose-07", name: "Cropped Jersey Rose 07", price: 165, category: "jersey", audience: ["men","women"], image: "gaisen-cropped-jersey-rose-07.png", second: "gaisen-cropped-jersey-rose-07-back.png", sizes: ["XS","S","M","L"], desc: "Cropped athletic jersey with rose number treatment and short body proportion." },
       { id: "tee-noir", name: "Classic Tee Noir", price: 120, category: "shirts", audience: ["men","women"], image: "tshirt-front.png", second: "tshirt-back.png", sizes: ["XS","S","M","L","XL"], desc: "Heavyweight black tee with front mark and large GAISEN back print." },
-      { id: "eclipse-sunglasses", name: "Eclipse Sunglasses Noir", price: 240, category: "sunglasses", audience: ["men","women"], image: "gaisen-eclipse-generated.png", sizes: ["One size"], desc: "Rimless black lens sunglasses with a sharp optic-house profile." },
-      { id: "axis-shield-noir", name: "Axis Shield Noir", price: 280, category: "sunglasses", audience: ["men","women"], image: "gaisen-axis-shield.png", sizes: ["One size"], desc: "Shield sunglasses with a stronger sport profile and black lens treatment." },
-      { id: "studio-frame-clear", name: "Studio Frame Clear", price: 220, category: "sunglasses", audience: ["men","women"], image: "gaisen-studio-frame.png", sizes: ["One size"], desc: "Clear studio frame with a quiet rectangular optic silhouette." },
-      { id: "halo-rimless-smoke", name: "Halo Rimless Smoke", price: 265, category: "sunglasses", audience: ["men","women"], image: "gaisen-halo-rimless.png", sizes: ["One size"], desc: "Smoke rimless frame designed as the softer eyewear piece of the house." },
-      { id: "rugby-polo-jersey", name: "Rugby Polo Jersey Creme", price: 210, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-jersey.png", sizes: ["XS","S","M","L","XL"], desc: "Heavy collar rugby-polo hybrid for a more formal jersey language." },
-      { id: "rugby-polo-noir", name: "Rugby Polo Noir", price: 215, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-noir.png", sizes: ["XS","S","M","L","XL"], desc: "Black rugby-polo jersey with cream collar and chest stripe." },
-      { id: "rugby-polo-creme-stripe", name: "Rugby Polo Creme Stripe", price: 215, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-creme.png", sizes: ["XS","S","M","L","XL"], desc: "Cream rugby jersey with black collar, cuff, and stripe details." },
-      { id: "rugby-polo-rose", name: "Rugby Polo Rose Stripe", price: 220, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-rose.png", sizes: ["XS","S","M","L","XL"], desc: "Long sleeve rugby polo with dusty rose stripe against black cotton." },
-      { id: "rugby-polo-ochre", name: "Rugby Polo Ochre Stripe", price: 220, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-ochre.png", sizes: ["XS","S","M","L","XL"], desc: "Cream rugby polo with warm ochre stripe and black collar detailing." },
-      { id: "cropped-jersey-femme", name: "Cropped Jersey Femme", price: 160, category: "jersey", audience: ["women"], image: "gaisen-cropped-jersey-femme.png", sizes: ["XS","S","M","L"], desc: "Women's cropped jersey with a wide athletic shoulder and abbreviated body." },
-      { id: "track-pant-noir", name: "Track Pant Noir", price: 220, category: "pants", audience: ["men","women"], image: "gaisen-track-pant-noir.png", sizes: ["XS","S","M","L","XL"], desc: "Formal track pant with a wider leg and clean side line." },
-      { id: "jogger-pant-stone", name: "Jogger Pant Stone", price: 195, category: "pants", audience: ["men","women"], image: "gaisen-jogger-pant-stone.png", sizes: ["XS","S","M","L","XL"], desc: "Premium jogger with dense fleece, clean taper, and quiet Gaisen mark." }
+      { id: "eclipse-sunglasses", name: "Eclipse Sunglasses Noir", price: 240, category: "sunglasses", audience: ["men","women"], image: "gaisen-eclipse-generated.png", second: "gaisen-eclipse-sunglasses-back.png", sizes: ["One size"], desc: "Rimless black lens sunglasses with a sharp optic-house profile." },
+      { id: "axis-shield-noir", name: "Axis Shield Noir", price: 280, category: "sunglasses", audience: ["men","women"], image: "gaisen-axis-shield.png", second: "gaisen-axis-shield-back.png", sizes: ["One size"], desc: "Shield sunglasses with a stronger sport profile and black lens treatment." },
+      { id: "studio-frame-clear", name: "Studio Frame Clear", price: 220, category: "sunglasses", audience: ["men","women"], image: "gaisen-studio-frame.png", second: "gaisen-studio-frame-back.png", sizes: ["One size"], desc: "Clear studio frame with a quiet rectangular optic silhouette." },
+      { id: "halo-rimless-smoke", name: "Halo Rimless Smoke", price: 265, category: "sunglasses", audience: ["men","women"], image: "gaisen-halo-rimless.png", second: "gaisen-halo-rimless-back.png", sizes: ["One size"], desc: "Smoke rimless frame designed as the softer eyewear piece of the house." },
+      { id: "rugby-polo-jersey", name: "Rugby Polo Jersey Creme", price: 210, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-jersey.png", second: "gaisen-rugby-polo-jersey-back.png", sizes: ["XS","S","M","L","XL"], desc: "Heavy collar rugby-polo hybrid for a more formal jersey language." },
+      { id: "rugby-polo-noir", name: "Rugby Polo Noir", price: 215, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-noir.png", second: "gaisen-rugby-polo-noir-back.png", sizes: ["XS","S","M","L","XL"], desc: "Black rugby-polo jersey with cream collar and chest stripe." },
+      { id: "rugby-polo-creme-stripe", name: "Rugby Polo Creme Stripe", price: 215, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-creme.png", second: "gaisen-rugby-polo-creme-back.png", sizes: ["XS","S","M","L","XL"], desc: "Cream rugby jersey with black collar, cuff, and stripe details." },
+      { id: "rugby-polo-rose", name: "Rugby Polo Rose Stripe", price: 220, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-rose.png", second: "gaisen-rugby-polo-rose-back.png", sizes: ["XS","S","M","L","XL"], desc: "Long sleeve rugby polo with dusty rose stripe against black cotton." },
+      { id: "rugby-polo-ochre", name: "Rugby Polo Ochre Stripe", price: 220, category: "jersey", audience: ["men","women"], image: "gaisen-rugby-polo-ochre.png", second: "gaisen-rugby-polo-ochre-back.png", sizes: ["XS","S","M","L","XL"], desc: "Cream rugby polo with warm ochre stripe and black collar detailing." },
+      { id: "cropped-jersey-femme", name: "Cropped Jersey Femme", price: 160, category: "jersey", audience: ["men","women"], image: "gaisen-cropped-jersey-femme.png", second: "gaisen-cropped-jersey-femme-back.png", sizes: ["XS","S","M","L"], desc: "Cropped jersey with a wide athletic shoulder and abbreviated body." },
+      { id: "track-pant-noir", name: "Track Pant Noir", price: 220, category: "pants", audience: ["men","women"], image: "gaisen-track-pant-noir.png", second: "gaisen-track-pant-noir-back.png", sizes: ["XS","S","M","L","XL"], desc: "Formal track pant with a wider leg and clean side line." },
+      { id: "jogger-pant-stone", name: "Jogger Pant Stone", price: 195, category: "pants", audience: ["men","women"], image: "gaisen-jogger-pant-stone.png", second: "gaisen-jogger-pant-stone-back.png", sizes: ["XS","S","M","L","XL"], desc: "Premium jogger with dense fleece, clean taper, and quiet Gaisen mark." }
     ];
 
     const state = { audience: "all", category: "all", cart: [], activeProduct: null };
@@ -1278,6 +1423,54 @@
       }, state.cart.length * 91);
       return `GSN-${String(seed % 10000).padStart(4, "0")}`;
     };
+    const escapeHtml = value => String(value).replace(/[&<>"']/g, char => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      "\"": "&quot;",
+      "'": "&#39;"
+    }[char]));
+
+    function closeSizePickers(except = null) {
+      document.querySelectorAll(".size-picker.is-open").forEach(picker => {
+        if (picker === except) return;
+        picker.classList.remove("is-open");
+        picker.querySelector(".size-trigger").setAttribute("aria-expanded", "false");
+      });
+    }
+
+    function syncSizePicker(picker, value) {
+      picker.querySelector(".size-code").textContent = value;
+      picker.querySelectorAll(".size-option").forEach(option => {
+        option.setAttribute("aria-selected", String(option.dataset.size === value));
+      });
+    }
+
+    function buildSizePicker(select) {
+      const existing = select.nextElementSibling;
+      if (existing && existing.classList.contains("size-picker")) existing.remove();
+      const label = select.getAttribute("aria-label") || "Select size";
+      const sizes = Array.from(select.options).map(option => option.value || option.textContent);
+      const current = select.value || sizes[0] || "";
+      const picker = document.createElement("div");
+      picker.className = "size-picker";
+      picker.innerHTML = `
+        <button class="size-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="${escapeHtml(label)}">
+          <span class="size-code">${escapeHtml(current)}</span>
+          <span class="size-arrow" aria-hidden="true">+</span>
+        </button>
+        <div class="size-menu" role="listbox" aria-label="${escapeHtml(label)}">
+          ${sizes.map(size => `
+            <button class="size-option" type="button" role="option" data-size="${escapeHtml(size)}" aria-selected="${String(size === current)}">${escapeHtml(size)}</button>
+          `).join("")}
+        </div>
+      `;
+      select.insertAdjacentElement("afterend", picker);
+    }
+
+    function initSizePickers(scope = document) {
+      scope.querySelectorAll(".size-select").forEach(buildSizePicker);
+    }
 
     function renderProducts() {
       const menu = document.getElementById("shopMenu");
@@ -1307,6 +1500,7 @@
         </article>
       `).join("");
       applyFilters();
+      initSizePickers(menu);
     }
 
     function applyFilters() {
@@ -1376,6 +1570,7 @@
       document.getElementById("modalPrice").textContent = money(product.price);
       document.getElementById("modalDesc").textContent = product.desc;
       document.getElementById("modalSize").innerHTML = product.sizes.map(size => `<option>${size}</option>`).join("");
+      initSizePickers(modal);
       modal.classList.add("is-open");
       modal.setAttribute("aria-hidden", "false");
       document.body.classList.add("modal-lock");
@@ -1390,6 +1585,26 @@
     }
 
     document.addEventListener("click", event => {
+      const sizeTrigger = event.target.closest(".size-trigger");
+      if (sizeTrigger) {
+        const picker = sizeTrigger.closest(".size-picker");
+        const shouldOpen = !picker.classList.contains("is-open");
+        closeSizePickers(picker);
+        picker.classList.toggle("is-open", shouldOpen);
+        sizeTrigger.setAttribute("aria-expanded", String(shouldOpen));
+        return;
+      }
+      const sizeOption = event.target.closest(".size-option");
+      if (sizeOption) {
+        const picker = sizeOption.closest(".size-picker");
+        const select = picker.previousElementSibling;
+        select.value = sizeOption.dataset.size;
+        select.dispatchEvent(new Event("change", { bubbles: true }));
+        syncSizePicker(picker, select.value);
+        closeSizePickers();
+        return;
+      }
+      closeSizePickers();
       const filter = event.target.closest(".filter-btn");
       if (filter) {
         const group = filter.closest(".filter-group");
@@ -1443,17 +1658,20 @@
       const subject = encodeURIComponent("Gaisen order request");
       const body = `Order code: ${encodeURIComponent(orderCode())}%0D%0AName: ${encodeURIComponent(document.getElementById("customerName").value)}%0D%0AEmail: ${encodeURIComponent(document.getElementById("customerEmail").value)}%0D%0APayment: ${encodeURIComponent(paymentMethod)}%0D%0ACountry: ${encodeURIComponent(document.getElementById("country").value)}%0D%0A%0D%0AItems:%0D%0A${orderLines}`;
       window.location.href = `mailto:orders@gaisen.com?subject=${subject}&body=${body}`;
-      note.textContent = "Opening the payment request. Add a Stripe or PayPal checkout link in the site file to make this button charge automatically.";
+      note.textContent = "Opening the payment request. Add a Stripe or PayPal checkout link later to make this button charge automatically.";
     });
 
     document.addEventListener("keydown", event => {
-      if (event.key === "Escape") closeOverlays();
+      if (event.key === "Escape") {
+        closeSizePickers();
+        closeOverlays();
+      }
     });
 
     renderProducts();
     renderCart();
   </script>
-  <script src="account-promo.js?v=account-1"></script>
+  <script src="account-promo.js?v=account-2"></script>
   <script src="button-motion.js?v=button-1"></script>
   <script src="support-bot.js?v=support-1"></script>
 </body>
