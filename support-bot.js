@@ -7,11 +7,11 @@
     },
     {
       keys: ["ship", "shipping", "delivery", "deliver", "germany", "eu", "country"],
-      text: "Delivery is planned for Germany and the EU first. At checkout, leave your country and email so the order request can be confirmed with the right delivery option."
+      text: "Delivery is planned for Germany and EU first. At checkout, leave your country and email so the order request can be confirmed with the right delivery option."
     },
     {
       keys: ["pay", "payment", "card", "paypal", "apple", "bank", "checkout"],
-      text: "The checkout menu lets you choose Card, PayPal, Apple Pay, or bank transfer. Automatic checkout needs a Stripe or PayPal link connected; right now the button creates an order request, so no card data is stored on the website."
+      text: "The checkout menu lets you choose Card, PayPal, Apple Pay, or bank transfer. Real automatic charging needs a Stripe or PayPal checkout link connected; right now the button creates an order request so no card data is stored on the website."
     },
     {
       keys: ["return", "refund", "exchange", "wrong"],
@@ -19,11 +19,11 @@
     },
     {
       keys: ["product", "jersey", "football", "rugby", "tee", "pants", "glasses", "sunglasses"],
-      text: "The current shop focuses on Jersey Blanc, Football Jersey Noir, rugby polos, cropped jerseys, classic tee, eyewear, track pant, and jogger. Basketball and new football designs are being rebuilt from scratch."
+      text: "The current shop focus is Jersey Blanc, Football Jersey Noir, rugby polos, cropped jerseys, classic tee, eyewear, track pant, and jogger. Basketball and new football designs are being rebuilt from scratch."
     },
     {
       keys: ["contact", "human", "email", "help", "support"],
-      text: "You can ask quick questions here. For a real person, use the Contact page or send an order request through checkout."
+      text: "You can ask me quick questions here. For a real person, use the Contact page or send an order request through checkout."
     },
     {
       keys: ["care", "wash", "clean"],
@@ -31,7 +31,7 @@
     },
     {
       keys: ["hello", "hi", "hey", "yo"],
-      text: "Hey, I am Gaisen Support. Ask me about sizing, delivery, payment, returns, or products."
+      text: "Hey. I am Gaisen Support. Ask me about sizing, delivery, payment, returns, or products."
     }
   ];
 
@@ -114,7 +114,7 @@
     root.querySelector(".support-toggle").addEventListener("click", () => {
       root.classList.add("is-open");
       if (!root.dataset.started) {
-        addMessage(root, "Hey, I am Gaisen Support. Ask me about sizing, payment, delivery, returns, or products.", "bot");
+        addMessage(root, "Hey. I am Gaisen Support. Ask me about sizing, payment, delivery, returns, or products.", "bot");
         root.dataset.started = "true";
       }
       input.focus();
