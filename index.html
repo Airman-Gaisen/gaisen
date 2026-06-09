@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="home-page">
 
   <nav class="nav">
     <div class="nav-left">
@@ -22,19 +22,22 @@
     </div>
   </nav>
 
-  <section class="hero">
-    <div class="hero-content">
-      <p class="hero-season">GAISEN OPENING — SS 2026</p>
-      <h1 class="hero-title">
-        <span class="line">Not a jersey.</span>
-        <span class="line italic">A statement.</span>
-      </h1>
-      <a href="shop.html" class="hero-cta">Shop the collection</a>
+  <section class="collection-film hero-film" aria-label="Gaisen collection film">
+    <div class="film-stage cinematic-stage campaign-video-stage">
+      <canvas id="campaignFilm" class="campaign-video-canvas" aria-label="A full-screen moving Gaisen product campaign video"></canvas>
+      <div class="campaign-video-ui" aria-hidden="true">
+        <span>MODEL FILM</span>
+        <span>GAISEN PLAY</span>
+        <span>FULL BODY FRAME</span>
+      </div>
+      <p class="film-signal">CAMPAIGN / 01</p>
     </div>
-    <div class="hero-image-placeholder">
-      <img src="white-jersey-front.png" alt="Gaisen White Jersey" style="width:100%;height:100%;object-fit:cover;object-position:center top;">
+    <div class="film-copy">
+      <p class="label">GAISEN OPENING — SS 2026</p>
+      <h1>Not a jersey. <em>A statement.</em></h1>
+      <p>A moving model campaign with walking, play, and full-body Gaisen looks in the frame.</p>
+      <a href="shop.html" class="link-underline">Shop the collection →</a>
     </div>
-    <div class="hero-scroll">↓ Scroll</div>
   </section>
 
   <div class="marquee">
@@ -106,35 +109,6 @@
     </div>
   </section>
 
-  <section class="collection-film" aria-label="Gaisen collection film">
-    <div class="film-stage">
-      <div class="film-frame frame-one">
-        <img src="film-jersey-blanc.png" alt="Gaisen collection film still with white jersey">
-      </div>
-      <div class="film-frame frame-two">
-        <img src="gaisen-rugby-polo-noir.png" alt="Gaisen collection film still with rugby polo">
-      </div>
-      <div class="film-frame frame-three">
-        <img src="film-cropped-jersey.png" alt="Gaisen collection film still with cropped jersey">
-      </div>
-      <div class="film-frame frame-four">
-        <img src="film-optic-house.png" alt="Gaisen collection film still with eyewear">
-      </div>
-    </div>
-    <div class="film-copy">
-      <p class="label">Collection Film</p>
-      <h2>GAISEN Athletic House, seen in motion.</h2>
-      <p>Four fictional editorial scenes introduce the uniform: football jersey, rugby polo, cropped jersey, and optic house.</p>
-      <a href="shop.html" class="link-underline">Explore looks →</a>
-    </div>
-    <div class="film-index">
-      <span>01 Jersey Blanc</span>
-      <span>02 Rugby Polo</span>
-      <span>03 Cropped Femme</span>
-      <span>04 Optic House</span>
-    </div>
-  </section>
-
   <section class="editorial">
     <div class="editorial-text">
       <p class="label">The House</p>
@@ -143,6 +117,74 @@
     </div>
     <div class="editorial-img" style="background:#1a1a1a;">
       <img src="tshirt-back.png" alt="Gaisen Tee Back" style="width:100%;height:100%;object-fit:cover;opacity:0.9;">
+    </div>
+  </section>
+
+  <section class="bottom-motion" aria-label="Gaisen moving product runway">
+    <div class="bottom-motion-copy">
+      <div>
+        <p class="label">Final Signal</p>
+        <h2>The collection keeps moving.</h2>
+        <p>One last moving pass for the uniforms, optics, and track pieces before the house closes.</p>
+      </div>
+      <a href="shop.html" class="link-underline">Enter shop</a>
+    </div>
+    <div class="bottom-motion-window">
+      <div class="bottom-motion-track">
+        <a class="motion-card motion-card-light" style="--flash:#ff3d9a;" href="shop.html#jersey-blanc">
+          <img src="white-jersey-front.png" alt="">
+          <span>01 / Jersey Blanc</span>
+        </a>
+        <a class="motion-card motion-card-dark" style="--flash:#f45a1f;" href="shop.html#football-jersey-noir">
+          <img src="gaisen-football-jersey-noir.png" alt="">
+          <span>02 / Football Noir</span>
+        </a>
+        <a class="motion-card motion-card-warm" style="--flash:#c7ff37;" href="shop.html#rugby-polo-noir">
+          <img src="gaisen-rugby-polo-noir.png" alt="">
+          <span>03 / Rugby Code</span>
+        </a>
+        <a class="motion-card motion-card-cool" style="--flash:#2b78ff;" href="shop.html#eclipse-sunglasses">
+          <img src="gaisen-eclipse-generated.png" alt="">
+          <span>04 / Eclipse Optic</span>
+        </a>
+        <a class="motion-card motion-card-light" style="--flash:#b464ff;" href="shop.html#track-pant-noir">
+          <img src="gaisen-track-pant-noir.png" alt="">
+          <span>05 / Track Noir</span>
+        </a>
+        <a class="motion-card motion-card-dark" style="--flash:#ffffff;" href="shop.html#tee-noir">
+          <img src="tshirt-front.png" alt="">
+          <span>06 / Tee Noir</span>
+        </a>
+        <a class="motion-card motion-card-light" style="--flash:#ff3d9a;" href="shop.html#jersey-blanc" aria-hidden="true" tabindex="-1">
+          <img src="white-jersey-front.png" alt="">
+          <span>01 / Jersey Blanc</span>
+        </a>
+        <a class="motion-card motion-card-dark" style="--flash:#f45a1f;" href="shop.html#football-jersey-noir" aria-hidden="true" tabindex="-1">
+          <img src="gaisen-football-jersey-noir.png" alt="">
+          <span>02 / Football Noir</span>
+        </a>
+        <a class="motion-card motion-card-warm" style="--flash:#c7ff37;" href="shop.html#rugby-polo-noir" aria-hidden="true" tabindex="-1">
+          <img src="gaisen-rugby-polo-noir.png" alt="">
+          <span>03 / Rugby Code</span>
+        </a>
+        <a class="motion-card motion-card-cool" style="--flash:#2b78ff;" href="shop.html#eclipse-sunglasses" aria-hidden="true" tabindex="-1">
+          <img src="gaisen-eclipse-generated.png" alt="">
+          <span>04 / Eclipse Optic</span>
+        </a>
+        <a class="motion-card motion-card-light" style="--flash:#b464ff;" href="shop.html#track-pant-noir" aria-hidden="true" tabindex="-1">
+          <img src="gaisen-track-pant-noir.png" alt="">
+          <span>05 / Track Noir</span>
+        </a>
+        <a class="motion-card motion-card-dark" style="--flash:#ffffff;" href="shop.html#tee-noir" aria-hidden="true" tabindex="-1">
+          <img src="tshirt-front.png" alt="">
+          <span>06 / Tee Noir</span>
+        </a>
+      </div>
+    </div>
+    <div class="bottom-motion-type" aria-hidden="true">
+      <span>GAISEN IN MOTION</span>
+      <span>GAISEN IN MOTION</span>
+      <span>GAISEN IN MOTION</span>
     </div>
   </section>
 
@@ -170,5 +212,8 @@
     </div>
   </footer>
 
+  <script src="campaign-film.js"></script>
+  <script src="button-motion.js"></script>
+  <script src="support-bot.js"></script>
 </body>
 </html>
