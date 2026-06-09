@@ -272,11 +272,7 @@ body:not(.home-page):not(.shop-page) .account-promo-bubble {
   display: grid;
   place-items: center;
   box-shadow: 0 22px 58px rgba(14,14,14,0.26);
-  animation: promoBubbleRise 26s linear 1 both;
-}
-
-.account-promo-bubble.is-finished {
-  display: none;
+  animation: promoBubbleRise 26s linear infinite;
 }
 
 .account-promo-bubble:hover {
