@@ -49,6 +49,10 @@
     note.textContent = `Welcome back${savedAccount.name ? `, ${savedAccount.name}` : ""}. ${discountCode} is ready.`;
   }
 
+  bubble.addEventListener("animationend", () => {
+    bubble.classList.add("is-finished");
+  });
+
   function openAccount() {
     panel.classList.add("is-open");
     panel.setAttribute("aria-hidden", "false");

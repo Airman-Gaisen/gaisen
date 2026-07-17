@@ -1,0 +1,28 @@
+GAISEN UPDATE ZIP
+
+This zip is only for updating your existing GitHub website.
+
+Upload these files into the same main website folder on GitHub and let GitHub replace shop.html.
+You do not need to upload the old product photos again.
+
+Changed file:
+- shop.html
+
+New compressed second/back photos:
+- gaisen-cropped-jersey-rose-07-back.webp
+- gaisen-rugby-polo-jersey-back.webp
+- gaisen-rugby-polo-noir-back.webp
+- gaisen-rugby-polo-creme-back.webp
+- gaisen-rugby-polo-rose-back.webp
+- gaisen-rugby-polo-ochre-back.webp
+- gaisen-cropped-jersey-femme-back.webp
+- gaisen-eclipse-sunglasses-back.webp
+- gaisen-axis-shield-back.webp
+- gaisen-studio-frame-back.webp
+- gaisen-halo-rimless-back.webp
+- gaisen-track-pant-noir-back.webp
+- gaisen-jogger-pant-stone-back.webp
+
+The older PNG back-photo versions can stay on your computer as backups, but GitHub does not need them for this update.
+
+Use the full site zip only if you want a complete backup or you are replacing the whole website.
